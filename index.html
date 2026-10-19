@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1998 Finest NPR — Want List</title>
+<style>
+  :root{ color-scheme: light; --bg:#f7f8fa; --card:#fff; --ink:#15223b; --muted:#6b7688; --line:#e3e7ee;
+    --navy:#1f3864; --red:#b0266c; --amber:#b8860b; --green:#1b7f3b; --blue:#2d6cdf; --yellow:#fff3cd; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); line-height:1.4;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap{ max-width:1280px; margin:0 auto; padding:24px 16px 60px; }
+  h1{ font-size:22px; margin:0 0 4px; }
+  .sub{ color:var(--muted); font-size:12.5px; margin:0 0 14px; }
+  .prog{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:13px 16px; margin:8px 0;
+    display:flex; align-items:center; gap:13px; box-shadow:0 1px 2px rgba(20,34,59,.04); flex-wrap:wrap; }
+  .bar{ flex:1; min-width:140px; height:11px; background:#e9edf4; border-radius:999px; overflow:hidden; }
+  .bar > span{ display:block; height:100%; width:0; background:linear-gradient(90deg,#2d6cdf,#1b7f3b); transition:width .3s; }
+  .pct{ font-weight:700; color:var(--navy); font-variant-numeric:tabular-nums; font-size:15px; }
+  .inv{ font-size:13px; color:var(--ink); font-weight:600; white-space:nowrap; } .inv span{ color:var(--green); }
+  .mb-ct{ font-size:12.5px; color:var(--amber); font-weight:600; white-space:nowrap; }
+  .reset{ font-size:12px; color:var(--muted); background:none; border:1px solid var(--line); border-radius:7px; padding:4px 9px; cursor:pointer; }
+  .legend{ font-size:12px; color:var(--muted); margin:4px 0 14px; }
+  .flag{ display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; white-space:nowrap; }
+  .f-graded{ background:#e8f6ee; color:var(--green); } .f-thin{ background:#fff4e0; color:var(--amber); } .f-none{ background:#fbe9f2; color:var(--red); }
+  .chip{ display:inline-block; width:16px; height:16px; border-radius:50%; background:var(--yellow); vertical-align:middle; }
+  .scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--card); box-shadow:0 1px 2px rgba(20,34,59,.04); }
+  table{ border-collapse:collapse; width:100%; font-size:12px; min-width:1260px; }
+  th,td{ padding:7px 8px; border-bottom:1px solid var(--line); text-align:left; vertical-align:middle; }
+  thead th{ background:var(--navy); color:#fff; font-weight:600; font-size:10.5px; text-transform:uppercase; letter-spacing:.02em; position:sticky; top:0; }
+  .sec td{ background:#eef1f7; font-weight:700; color:var(--navy); font-size:12px; text-transform:uppercase; letter-spacing:.03em; }
+  tbody tr:hover:not(.sec){ background:#f5f8fd; }
+  tr.done{ background:#eaf7ee; }
+  tr.maybe{ background:var(--yellow); }
+  tr.done .pl b{ color:var(--green); }
+  input[type=checkbox]{ width:17px; height:17px; accent-color:var(--green); cursor:pointer; }
+  .mb{ width:22px; height:22px; border-radius:50%; border:1.5px solid #d9b94a; background:#fff; color:#b8860b; font-weight:800; font-size:12px; cursor:pointer; line-height:1; padding:0; }
+  .mb.on{ background:var(--amber); color:#fff; border-color:var(--amber); }
+  .pl{ white-space:nowrap; } .pl b{ font-weight:600; }
+  .pl a{ color:var(--blue); text-decoration:none; font-weight:400; font-size:11px; } .pl a:hover{ text-decoration:underline; }
+  .own{ font-size:10px; font-weight:700; color:#fff; background:var(--green); border-radius:5px; padding:1px 5px; margin-left:4px; }
+  .pick{ font-size:10px; font-weight:700; color:#fff; background:var(--navy); border-radius:5px; padding:1px 6px; margin-right:5px; }
+  .num{ color:var(--muted); font-weight:400; }
+  td.grade{ font-weight:600; color:var(--navy); white-space:nowrap; } td.paid{ font-weight:600; font-variant-numeric:tabular-nums; }
+.pdate{ font-weight:500; font-size:11px; color:#8a94a6; white-space:nowrap; }
+  .sale .pr{ font-weight:600; } .sale .meta{ color:var(--muted); font-size:10.5px; white-space:nowrap; }
+  .sale .pt{ font-size:9.5px; white-space:nowrap; }
+  .sale .plat{ font-weight:700; } .plat.pe{ color:#6b7688; } .plat.pf{ color:#6b3fa0; } .plat.po{ color:#1b7f3b; } .sale .pt{ color:var(--muted); }
+  .pop{ text-align:center; font-variant-numeric:tabular-nums; } .pop.big{ font-weight:700; color:var(--navy); }
+  .p10{ color:var(--green); font-weight:600; }
+  .dash{ color:#c3c9d4; }
+  .cav{ background:#fffdf5; border-left:4px solid var(--amber); border-radius:10px; padding:13px 15px; margin-top:16px; font-size:12.5px; }
+  .tabs{ display:flex; gap:4px; margin:6px 0 14px; border-bottom:2px solid var(--line); }
+  .tabbtn{ background:none; border:none; padding:9px 16px; font-size:14px; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px; }
+  .tabbtn.active{ color:var(--navy); border-bottom-color:var(--navy); }
+  .pane{ display:none; } .pane.active{ display:block; }
+  .cmp h2{ font-size:19px; margin:26px 0 8px; border-bottom:2px solid var(--line); padding-bottom:6px; }
+  .cmp .csub{ color:var(--muted); font-size:13px; margin:0 0 14px; }
+  .cmp .cnote{ font-size:12px; color:var(--muted); margin:6px 0 12px; }
+  .cmp .cbox{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin:12px 0; box-shadow:0 1px 2px rgba(20,34,59,.04); overflow-x:auto; }
+  .cmp .chartbox{ position:relative; height:330px; }
+  .cmp table{ border-collapse:collapse; width:100%; min-width:640px; font-size:13px; }
+  .cmp th,.cmp td{ padding:7px 9px; border-bottom:1px solid var(--line); text-align:right; }
+  .cmp th:first-child,.cmp td:first-child{ text-align:left; }
+  .cmp thead th{ background:var(--navy); color:#fff; font-weight:600; font-size:11px; }
+  .cmp tr.hl{ background:#eef6ff; }
+  .cmp .tldr{ border-left:4px solid var(--blue); }
+  .cmp .big{ font-size:15px; }
+  .cmp .verdict{ border-left:4px solid var(--amber); background:#fffdf5; }
+  .cmp .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin:10px 0; }
+  .cmp .stat{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:11px 13px; }
+  .cmp .stat .n{ font-size:19px; font-weight:700; color:var(--navy); } .cmp .stat .l{ font-size:11px; color:var(--muted); }
+  .cmp td.c{ text-align:left; } .cmp .dot{ font-weight:800; } .cmp .r{ color:var(--red); } .cmp .a{ color:var(--amber); } .cmp .g{ color:var(--green); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <h1>1998 Finest Non-Protected Refractor — Want List</h1>
+  <p class="sub">Every Hall of Famer in the set, the heavily-collected non-HOF names, and the 1998 Draft top-10. Tick the box for cards you own (row turns green, the ? disappears); hit the yellow <strong>?</strong> for ones you're still deciding on. Shows the last 5 PSA-graded sales and full population. Saves on this device. USD · Oct 2026.</p>
+
+  <div class="tabs">
+    <button class="tabbtn active" data-pane="paneWL">Want List</button>
+    <button class="tabbtn" data-pane="paneCMP">Refractor Comparison</button>
+    <button class="tabbtn" data-pane="paneBARO">Market Barometer</button>
+    <button class="tabbtn" data-pane="paneKOBE">Kobe Fair Value</button>
+  </div>
+
+  <div id="paneWL" class="pane active">
+  <div class="prog">
+    <div class="pct"><span id="cnt">0</span>/<span id="tot">0</span> owned</div>
+    <div class="bar"><span id="fill"></span></div>
+    <div class="mb-ct"><span id="mbc">0</span> considering</div>
+    <div class="inv"><span id="inv">$0</span> in <span id="ownc">0</span> cards</div>
+    <button class="reset" id="reset">Reset checks</button>
+  </div>
+  <p class="legend">Flag =
+    <span class="flag f-graded">Active graded</span> ·
+    <span class="flag f-thin">Thin graded</span> ·
+    <span class="flag f-none">No graded in 3 yrs</span> &nbsp;|&nbsp;
+    <span class="chip"></span> yellow = considering · green = owned
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr>
+        <th>✓</th><th>?</th><th>Player</th><th>Grade</th><th>Paid</th><th>Flag</th>
+        <th>Sale 1 (newest)</th><th>Sale 2</th><th>Sale 3</th><th>Sale 4</th><th>Sale 5</th>
+        <th class="pop">Total</th><th class="pop">PSA 10</th><th class="pop">PSA 9</th><th class="pop">PSA 8</th><th class="pop">PSA 7</th>
+      </tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <div class="cav">
+    <strong>Your cards (10):</strong> Vince Carter PSA 9 $190, Paul Pierce PSA 9 $300, Antawn Jamison PSA 9 $50, Karl Malone PSA 9 $95, Larry Hughes raw $10, Gary Payton raw $46, Chris Webber raw $35, Hakeem Olajuwon raw $92, Patrick Ewing raw $90, Ben Wallace raw $50.<br><br>
+    <strong>Columns.</strong> Sales 1-5 = the five most recent PSA-graded sales at any grade (price · grade · month). Each sale also shows platform (eBay / <span style="color:#6b3fa0;font-weight:700">Fanatics</span> / Goldin) and type (Auc=auction, BIN=buy-it-now, Offer=best offer). Population = PSA total graded and the per-grade counts (10 / 9 / 8 / 7). Carter, Nowitzki and Pierce appear in both the HOF list and the draft top-10; one checkbox controls each.
+  </div>
+  </div><!-- /paneWL -->
+
+  <div id="paneCMP" class="pane cmp">
+    <div class="cbox tldr"><p style="margin:0" class="big"><strong>How the NPR stacks up.</strong> For <strong>Jordan</strong>, the Finest NPR is his flagship 1998 refractor (no base Topps Chrome — only an ultra-rare "Preview" promo). For <strong>Kobe</strong>, his Topps Chrome #68 Refractor is the stronger blue-chip. Set-wide, the NPR has <strong>outrun the regular Finest Refractor</strong>, its scarcity premium widening from ~1.45× to ~1.8× over 2024-26.</p></div>
+
+    <h2>Michael Jordan #81 — PSA 9 median by year</h2>
+    <p class="csub">Log scale. The Topps Chrome "Preview" is an ultra-rare promo (not a base card).</p>
+    <div class="cbox"><div class="chartbox"><canvas id="jChart"></canvas></div></div>
+    <div class="cbox"><table><thead><tr><th>Jordan variant</th><th>PSA 9 n</th><th>PSA 9 median</th><th>PSA 9 last</th><th>2024→26</th></tr></thead><tbody id="jtb"></tbody></table></div>
+
+    <h2>Kobe Bryant — PSA 9 median by year</h2>
+    <p class="csub">Finest #175 tiers vs. Topps Chrome #68 Refractor. Log scale.</p>
+    <div class="cbox"><div class="chartbox"><canvas id="kChart"></canvas></div></div>
+    <div class="cbox"><table><thead><tr><th>Kobe variant</th><th>PSA 9 n</th><th>PSA 9 median</th><th>PSA 9 last</th><th>2024→26</th></tr></thead><tbody id="ktb"></tbody></table></div>
+
+    <h2>NPR vs. regular Finest Refractor — set-wide</h2>
+    <p class="csub">An 8-card key basket (Jordan, Kobe, Carter, Dirk, Pierce, Garnett, Duncan, Iverson), NPR vs the ordinary Finest Refractor of the same card, PSA 9.</p>
+    <div class="cbox"><div class="chartbox"><canvas id="basketChart"></canvas></div></div>
+    <p class="cnote">Basket = sum of the 8 PSA 9 medians that year (one PSA 9 of each).</p>
+    <div class="cbox"><div class="chartbox" style="height:360px"><canvas id="premChart"></canvas></div></div>
+    <p class="cnote">2026 PSA 9 median per card (log scale); the ratio by each name is the NPR premium (NPR ÷ Refractor). Dirk sits at ~parity.</p>
+    <div class="cbox"><table><thead><tr><th>Card (PSA 9)</th><th>NPR 2024</th><th>NPR 2026</th><th>Ref 2024</th><th>Ref 2026</th><th>NPR prem</th></tr></thead><tbody id="nrtb"></tbody></table></div>
+
+    <div class="cbox tldr"><p style="margin:0"><strong>Verdict.</strong> Both parallels are up hard, but the NPR basket rose <strong>3.6×</strong> since 2024 vs <strong>2.9×</strong> for the regular Refractor, and the NPR premium <em>widened</em> to ~1.8×. Exception: <strong>Dirk #234</strong>, where NPR ≈ regular Refractor (~$610 each). The regular Refractor is 2-3× more plentiful and far more liquid — the easier, cheaper fill if you don't need the premium.</p></div>
+  </div>
+
+  <div id="paneBARO" class="pane cmp">
+    <h2>Card Market Cycle Barometer</h2>
+    <p class="csub">Using the <strong>1986 Fleer Jordan #57</strong> (the hobby's bellwether) as a market proxy. PSA Auction Prices, Oct 2026.</p>
+    <div class="cbox verdict"><p style="margin:0" class="big"><strong>Late-cycle and hot — the mainstream market has reclaimed and passed its COVID-bubble highs, but it's not yet a confirmed top.</strong></p>
+      <p style="margin:8px 0 0">The liquid PSA 9 Jordan trades <strong>above</strong> its 2021 peak and ran vertically in August; volume is near bubble levels and still rising. That's classic late-cycle behavior → elevated pullback risk. But it's not a 2021 replay: the trophy PSA 10 is still 15-45% below its mania highs, and volume hasn't diverged yet. Elevated risk, August a yellow flag — no red "exhaustion" signal fired.</p></div>
+    <div class="grid">
+      <div class="stat"><div class="n">$45k</div><div class="l">PSA 9 Jordan, Aug-Oct '26 avg</div></div>
+      <div class="stat"><div class="n">$33.9k</div><div class="l">2021 bubble avg (now exceeded)</div></div>
+      <div class="stat"><div class="n">+22%</div><div class="l">PSA 9 Jul→Aug '26 jump</div></div>
+      <div class="stat"><div class="n">−15/−44%</div><div class="l">PSA 10 still below 2021 avg/max</div></div>
+    </div>
+    <h2>The bellwether's two cycles — price &amp; volume</h2>
+    <p class="csub">1986 Fleer Jordan PSA 9: average price (line) + sales per year (bars). 2021 bubble, 2022-23 bust (volume to 37), 2024-26 run to new highs.</p>
+    <div class="cbox"><div class="chartbox"><canvas id="cycleChart"></canvas></div></div>
+    <h2>The August move</h2>
+    <p class="csub">PSA 9 Jordan monthly average, trailing 12 months — flat into spring, then the August acceleration to ~$46k.</p>
+    <div class="cbox"><div class="chartbox" style="height:270px"><canvas id="moChart"></canvas></div></div>
+    <h2>Mainstream vs. trophy (indexed, 2019 = 100)</h2>
+    <div class="cbox"><div class="chartbox"><canvas id="divChart"></canvas></div></div>
+    <p class="cnote">PSA 9 (liquid) made a new high; PSA 10 (trophy) recovered to ~$362k but is still short of its 2021 $423k-avg / $738k-max mania. Liquid leading, trophy lagging = more retail-driven than 2021.</p>
+    <h2>Leading indicators of a top — current reads</h2>
+    <div class="cbox"><table><thead><tr><th>Indicator</th><th>Reading now</th></tr></thead><tbody id="indic"></tbody></table></div>
+    <div class="cbox verdict"><p style="margin:0"><strong>For the set:</strong> your NPR basket is ~$11.4k now vs ~$4.9k at the 2021 peak on ~10× the 2022-23 volume — same wave, same late-cycle risk. Since volume vanishes in downturns, prioritize the <strong>scarce names while they're listed</strong> and stay price-disciplined on the <strong>liquid stars</strong>. Watch for the turn: PSA 9 volume stalling while price holds, and BIN asks detaching further from auction comps.</p></div>
+  </div>
+
+  <div id="paneKOBE" class="pane cmp">
+    <h2>Kobe NPR #175 — spread-implied fair value (PSA 9)</h2>
+    <p class="csub">Valuing the 1998 Finest <strong>Non-Protected Refractor</strong> Kobe PSA 9 off two highly-traded comps: its sibling <strong>regular Finest Refractor #175</strong> and the blue-chip <strong>Topps Chrome #68 Refractor</strong>. PSA Auction Prices, Oct 2026.</p>
+    <div class="cbox tldr"><p style="margin:0" class="big"><strong>Fair value today ≈ $2,000–2,500; last sale $2,490.</strong> The <strong>$2,800 BIN</strong> is ~12% over the last sale and the top of fair — a modest premium, defensible given the strong 2026 uptrend and a scarce PSA 9 pop of 49. Contrast Dirk, where the ~$2,275 BIN was ~3× a ~$850 fair value.</p></div>
+    <div class="grid">
+      <div class="stat"><div class="n">$2,490</div><div class="l">Last PSA 9 sale (Oct 2)</div></div>
+      <div class="stat"><div class="n">$1,700</div><div class="l">2026 PSA 9 median</div></div>
+      <div class="stat"><div class="n">49</div><div class="l">PSA 9 population (vs 68 / 124 comps)</div></div>
+      <div class="stat"><div class="n">+12%</div><div class="l">$2,800 BIN vs last sale</div></div>
+    </div>
+
+    <h2>PSA 9 median by year</h2>
+    <p class="csub">NPR #175 vs regular Finest Refractor #175 vs Topps Chrome #68 Refractor. Log scale.</p>
+    <div class="cbox"><div class="chartbox"><canvas id="kobeChart"></canvas></div></div>
+    <div class="cbox"><table><thead><tr><th>Year</th><th>NPR 9</th><th>Finest Ref 9</th><th>TC Ref 9</th><th>NPR÷Ref</th><th>NPR÷TCR</th></tr></thead><tbody id="kobeTb"></tbody></table></div>
+
+    <h2>The spread over time</h2>
+    <p class="csub">NPR as a multiple of each comp. The NPR runs at a premium to its Refractor sibling (scarcer); it trades at a fraction of the surging Topps Chrome Refractor.</p>
+    <div class="cbox"><div class="chartbox" style="height:300px"><canvas id="kobeRatio"></canvas></div></div>
+    <p class="cnote">NPR÷Ref has widened toward ~2× (scarcity premium). NPR÷TCR has compressed to ~0.55 because the Topps Chrome Refractor rocketed to a $3,100 median in 2026.</p>
+
+    <h2>What the spread implies today</h2>
+    <div class="cbox"><table><thead><tr><th>Anchor</th><th>Comp now (PSA 9)</th><th>Ratio used</th><th>Implied NPR 9</th></tr></thead><tbody id="kobeImp"></tbody></table></div>
+    <p class="cnote">Recent NPR 9 sales: $2,000 (Aug 9) · $1,900 (Sep 12) · $2,490 (Oct 2) — trending up through the year. Samples are thin (1–8 sales/yr), so treat the comps as corroboration of the NPR's own recent prints, not independent precision.</p>
+
+    <div class="cbox verdict"><p style="margin:0"><strong>Verdict.</strong> A disciplined target is ~$2,300–2,500; <strong>$2,800 is the top of fair — a slight overpay, not a rip.</strong> If you want the card and believe the 2026 trend (the Topps Chrome Refractor at $3,100 gives it room to keep closing the gap), $2,800 is a reasonable "pay slightly forward" price. Patience could still find a $1,900–2,000 print, but those are getting scarcer as it climbs.</p></div>
+  </div>
+
+</div>
+
+<script>
+const G="graded",T="thin",N="none";
+// group, player, spec, num, flag, pick(optional)
+const META=[
+ ["East All-Stars","Michael Jordan","304664","#81",G],
+ ["East All-Stars","Grant Hill","304696","",G],
+ ["East All-Stars","Dikembe Mutombo","2020586","#15",T],
+ ["East All-Stars","Reggie Miller","5210023","",G],
+ ["East All-Stars","Tim Hardaway","2020860","",T],
+ ["West All-Stars","Kobe Bryant","304705","#175",G],
+ ["West All-Stars","Kevin Garnett","304637","#14",G],
+ ["West All-Stars","Shaquille O'Neal","304648","#40",G],
+ ["West All-Stars","Karl Malone","304729","",G],
+ ["West All-Stars","Gary Payton","2019558","",T],
+ ["West All-Stars","David Robinson","1876704","",T],
+ ["West All-Stars","Jason Kidd","2020838","",N],
+ ["West All-Stars","Mitch Richmond","2020594","",T],
+ ["West All-Stars","Tim Duncan","304721","",G],
+ ["Other HOFers (played, not All-Stars)","Allen Iverson","304654","",G],
+ ["Other HOFers (played, not All-Stars)","Dennis Rodman","5209757","#134",G],
+ ["Other HOFers (played, not All-Stars)","Scottie Pippen","304679","",T],
+ ["Other HOFers (played, not All-Stars)","Charles Barkley","304681","",G],
+ ["Other HOFers (played, not All-Stars)","Hakeem Olajuwon","2019553","",T],
+ ["Other HOFers (played, not All-Stars)","John Stockton","2019552","",T],
+ ["Other HOFers (played, not All-Stars)","Joe Dumars","304688","",N],
+ ["Other HOFers (played, not All-Stars)","Patrick Ewing","2019917","",T],
+ ["Other HOFers (played, not All-Stars)","Alonzo Mourning","5209399","",T],
+ ["Other HOFers (played, not All-Stars)","Chris Webber","304735","",T],
+ ["Other HOFers (played, not All-Stars)","Ray Allen","5209820","",G],
+ ["Other HOFers (played, not All-Stars)","Chris Mullin","2019920","",T],
+ ["Other HOFers (played, not All-Stars)","Steve Nash","2020593","",T],
+ ["Other HOFers (played, not All-Stars)","Toni Kukoc","5209985","",T],
+ ["Other HOFers (played, not All-Stars)","Ben Wallace","5209941","",T],
+ ["Other HOFers (played, not All-Stars)","Vlade Divac","2020635","",N],
+ ["Other HOFers (played, not All-Stars)","Chauncey Billups","4591661","",T],
+ ["Other HOFers (played, not All-Stars)","Arvydas Sabonis","14278336","",N],
+ ["Other HOFers (played, not All-Stars)","Vince Carter","304767","#230",G],
+ ["Other HOFers (played, not All-Stars)","Paul Pierce","304797","#235",G],
+ ["Other HOFers (played, not All-Stars)","Dirk Nowitzki","304791","#234",G],
+ ["Other HOFers (played, not All-Stars)","Tracy McGrady","2020851","",N],
+ ["Heavily collected (non-HOF)","Anfernee Hardaway","304699","",T],
+ ["Heavily collected (non-HOF)","Stephon Marbury","304710","",T],
+ ["Heavily collected (non-HOF)","Jayson Williams","304727","",T],
+ ["Heavily collected (non-HOF)","Muggsy Bogues","2020596","",T],
+ ["Heavily collected (non-HOF)","Shawn Kemp","5209545","",N],
+ ["1998 Draft — Top 10 Picks","Michael Olowokandi","304743","#226",T,1],
+ ["1998 Draft — Top 10 Picks","Mike Bibby","304749","#227",T,2],
+ ["1998 Draft — Top 10 Picks","Raef LaFrentz","304755","#228",T,3],
+ ["1998 Draft — Top 10 Picks","Antawn Jamison","304761","#229",G,4],
+ ["1998 Draft — Top 10 Picks","Vince Carter","304767","#230",G,5],
+ ["1998 Draft — Top 10 Picks","Robert Traylor","304773","#231",T,6],
+ ["1998 Draft — Top 10 Picks","Jason Williams","304779","#232",G,7],
+ ["1998 Draft — Top 10 Picks","Larry Hughes","304785","#233",T,8],
+ ["1998 Draft — Top 10 Picks","Dirk Nowitzki","304791","#234",G,9],
+ ["1998 Draft — Top 10 Picks","Paul Pierce","304797","#235",G,10],
+];
+// spec -> last 5 graded sales [grade,price,"YYYY-MM-DD"]
+const SALES5={
+"304664":[[7,5495,"2026-09-30","eBay","BIN"],[9,8400,"2026-09-21","Fanatics","Auc"],[8,5400,"2026-08-24","Fanatics","Auc"],[9,7799,"2026-07-31","eBay","BIN"],[8,4150,"2026-06-16","eBay","Offer"]],
+"304696":[[10,210,"2025-10-13","Fanatics","Auc"],[9,23.38,"2025-03-02","eBay","Auc"],[9,22.5,"2025-02-03","eBay","Auc"],[9,42,"2024-05-16","eBay","Auc"],[10,152.5,"2023-02-22","eBay","Auc"]],
+"2020586":[[10,103.5,"2025-03-24","eBay","Auc"]],
+"5210023":[[9,175,"2026-10-02","eBay","Offer"],[9,95.99,"2025-10-09","eBay","Auc"],[9,56,"2024-05-16","eBay","Auc"],[9,149.99,"2024-04-13","eBay","Auc"]],
+"2020860":[[9,33.6,"2025-12-15","Fanatics","Auc"]],
+"304705":[[9,2489.99,"2026-10-02","eBay","BIN"],[10,8105,"2026-09-18","eBay","Auc"],[7,900,"2026-09-14","Fanatics","Auc"],[9,1900,"2026-09-12","eBay","Offer"],[9,2000,"2026-08-09","eBay","Offer"]],
+"304637":[[9,240,"2026-10-05","eBay","Offer"],[8,45,"2026-06-17","eBay","Offer"],[9,105,"2026-01-15","eBay","Offer"],[9,90,"2025-11-06","eBay","Auc"],[9,66,"2024-11-11","eBay","Auc"]],
+"304648":[[9,150,"2025-05-19","eBay","Auc"],[9,153.84,"2025-04-28","eBay","Auc"],[9,170.38,"2024-11-18","eBay","Auc"],[9,246.94,"2024-10-22","eBay","Auc"],[9,152.5,"2024-10-04","eBay","Auc"]],
+"304729":[[9,95,"2026-10-14","eBay","Offer"],[10,280,"2026-05-31","eBay","Offer"],[9,56,"2024-05-16","eBay","Auc"],[9,3.35,"2018-04-22","eBay","Auc"]],
+"2019558":[[8,50,"2026-09-04","eBay","Offer"],[8,15.76,"2022-09-25","eBay","Auc"],[9,9.83,"2020-02-20","eBay","Auc"],[9,4.25,"2020-01-23","eBay","Auc"]],
+"1876704":[[9,50,"2025-09-10","eBay","Offer"],[10,152.5,"2023-08-22","eBay","Auc"],[9,1.25,"2018-05-29","eBay","Auc"]],
+"2020838":[],
+"2020594":[[10,324,"2025-11-10","Fanatics","Auc"]],
+"304721":[[9,300,"2026-10-06","eBay","Offer"],[9,200,"2026-08-20","eBay","BIN"],[10,700,"2026-08-15","eBay","BIN"],[9,164.99,"2026-08-11","eBay","BIN"],[9,166,"2026-05-15","eBay","Offer"]],
+"304654":[[9,528,"2026-09-07","Fanatics","Auc"],[8,350,"2026-09-01","eBay","BIN"],[8,145,"2026-08-04","eBay","Offer"],[8,117.5,"2026-05-27","eBay","Auc"],[9,190.5,"2026-05-06","eBay","Auc"]],
+"5209757":[[8,150,"2026-04-13","eBay","BIN"],[9,102.5,"2026-03-10","eBay","Auc"],[9,130,"2026-02-17","eBay","Offer"],[8,99.99,"2025-12-30","eBay","Offer"],[9,150,"2025-12-09","eBay","Offer"]],
+"304679":[[9,150,"2025-12-13","eBay","BIN"]],
+"304681":[[10,324,"2026-03-02","Fanatics","Auc"],[9,125,"2025-09-25","eBay","BIN"],[9,85.5,"2025-03-23","eBay","Offer"],[9,26,"2024-05-16","eBay","Auc"],[9,39.99,"2023-03-16","eBay","Auc"]],
+"2019553":[[9,88.99,"2025-02-16","eBay","Auc"]],
+"2019552":[[8,49,"2025-09-05","eBay","Auc"],[9,100,"2024-06-24","eBay","Auc"],[9,56.12,"2021-02-22","eBay","Auc"]],
+"304688":[],
+"2019917":[[8,35,"2025-12-26","eBay","Offer"],[10,189.99,"2025-12-23","eBay","BIN"]],
+"5209399":[[9,75,"2025-12-23","eBay","BIN"],[9,37.36,"2024-09-26","eBay","Auc"],[9,53.67,"2024-08-20","eBay","Auc"],[9,22.5,"2023-08-24","eBay","Auc"]],
+"304735":[[8,16,"2025-04-03","eBay","BIN"],[10,13.33,"2019-07-26","eBay","Auc"],[10,14.5,"2019-04-17","eBay","Auc"]],
+"5209820":[[9,100,"2026-09-09","eBay","Offer"],[9,75,"2026-06-22","eBay","BIN"],[9,56,"2026-01-19","eBay","Auc"],[9,40,"2025-04-23","eBay","Offer"]],
+"2019920":[[8,25,"2025-12-31","eBay","BIN"],[8,25,"2025-08-29","eBay","BIN"]],
+"2020593":[[7,26,"2026-01-23","eBay","Offer"],[9,77,"2025-09-24","eBay","Auc"],[8,17.57,"2024-07-01","eBay","Auc"]],
+"5209985":[[9,45,"2025-12-17","eBay","BIN"],[9,21.51,"2024-05-09","eBay","Auc"]],
+"5209941":[[9,25,"2025-03-25","eBay","BIN"]],
+"2020635":[],
+"4591661":[[9,6.6,"2024-05-09","eBay","Auc"],[9,20.89,"2021-03-26","eBay","Auc"]],
+"14278336":[],
+"304767":[[9,710,"2026-10-09","eBay","Auc"],[10,605,"2026-01-19","eBay","Offer"],[10,720,"2026-01-05","Fanatics","Auc"],[10,630,"2025-11-10","eBay","Auc"],[9,264,"2025-11-03","Fanatics","Auc"]],
+"304797":[[9,300,"2026-10-01","eBay","Offer"],[9,280,"2026-09-24","Fanatics","Offer"],[9,260,"2026-07-08","eBay","Offer"],[10,1111,"2025-12-26","eBay","Offer"],[9,208.5,"2025-09-12","eBay","Auc"]],
+"304791":[[8,810,"2026-09-09","eBay","Auc"],[8,492,"2026-09-07","Fanatics","Auc"],[9,739,"2026-08-30","Fanatics","BIN"],[9,474.99,"2026-01-17","eBay","BIN"],[9,392,"2025-11-13","eBay","Auc"]],
+"2020851":[[9,18,"2023-02-02","Goldin","Auc"]],
+"304699":[[9,70,"2025-11-30","eBay","Offer"],[7,75,"2025-01-12","eBay","Auc"],[9,67,"2024-04-29","eBay","Auc"],[10,100,"2020-06-04","eBay","BIN"]],
+"304710":[[10,200,"2026-03-24","eBay","Offer"],[9,42,"2026-01-19","Fanatics","Auc"],[9,23.35,"2024-05-16","eBay","Auc"]],
+"304727":[[8,25,"2026-01-26","eBay","BIN"],[9,25,"2025-01-19","eBay","BIN"],[4,2.8,"2024-07-01","eBay","Auc"]],
+"2020596":[[8,30.15,"2025-06-11","eBay","BIN"],[10,69.98,"2020-04-05","eBay","BIN"]],
+"5209545":[],
+"304743":[[7,5.51,"2024-07-01","eBay","Auc"]],
+"304749":[[10,1,"2024-11-23","eBay","Auc"],[9,13.5,"2024-04-18","eBay","Auc"],[8,10.5,"2021-09-12","eBay","Auc"],[9,26.02,"2020-12-22","eBay","Auc"],[9,10.5,"2020-02-12","eBay","Auc"]],
+"304755":[[8,25,"2026-05-19","eBay","BIN"],[7,5.51,"2024-07-01","eBay","Auc"]],
+"304761":[[9,45.74,"2026-10-14","eBay","BIN"],[10,95,"2026-08-17","Fanatics","BIN"],[8,31,"2026-07-18","eBay","Offer"],[9,27,"2026-05-31","Fanatics","BIN"],[8,13.38,"2026-01-02","eBay","Auc"]],
+"304773":[[9,6.5,"2026-04-23","eBay","Auc"],[9,60,"2025-12-15","Fanatics","Auc"],[9,62,"2024-07-01","eBay","Auc"],[9,7,"2018-04-22","eBay","Offer"]],
+"304779":[[9,175,"2026-07-24","eBay","Offer"],[7,235.5,"2026-07-23","eBay","Auc"],[10,600,"2026-06-10","eBay","Offer"],[9,175,"2026-02-17","eBay","BIN"],[9,179.99,"2026-01-19","eBay","BIN"]],
+"304785":[[9,19.99,"2025-08-29","eBay","BIN"],[7,5.51,"2024-07-01","eBay","Auc"]],
+};
+// spec -> [total, PSA10, PSA9, PSA8, PSA7]
+const POPS={
+"304664":[73,3,38,21,6],"304696":[17,6,10,1,0],"2020586":[6,5,0,0,1],"5210023":[9,1,5,2,1],"2020860":[3,1,2,0,0],
+"304705":[81,10,49,18,3],"304637":[20,5,12,3,0],"304648":[20,1,14,4,0],"304729":[11,2,8,0,1],"2019558":[7,0,3,4,0],
+"1876704":[8,4,4,0,0],"2020838":[6,2,3,1,0],"2020594":[3,1,0,1,1],"304721":[35,1,22,10,2],"304654":[22,0,12,9,1],
+"5209757":[22,6,10,4,2],"304679":[10,0,5,4,1],"304681":[9,2,7,0,0],"2019553":[5,0,2,2,1],"2019552":[9,1,6,2,0],
+"304688":[4,3,1,0,0],"2019917":[12,3,3,4,1],"5209399":[7,0,5,2,0],"304735":[11,4,4,3,0],"5209820":[8,1,7,0,0],
+"2019920":[6,1,1,3,0],"2020593":[6,0,1,2,2],"5209985":[6,0,3,2,1],"5209941":[5,2,2,1,0],"2020635":[2,1,0,1,0],
+"4591661":[2,0,2,0,0],"14278336":[0,0,0,0,0],"304767":[182,32,132,14,1],"304797":[87,13,55,13,1],"304791":[104,14,59,22,4],
+"2020851":[6,2,3,1,0],"304743":[9,2,6,0,1],"304749":[41,9,28,2,0],"304755":[17,6,7,3,1],"304761":[61,15,39,6,1],
+"304773":[7,1,5,0,0],"304779":[65,13,40,10,2],"304785":[34,10,21,2,1],
+"304699":[15,3,5,4,1],"304710":[6,2,3,1,0],"304727":[4,0,2,1,0],"2020596":[2,1,0,1,0],"5209545":[2,1,0,1,0],
+};
+const OWNED={
+ "304791":{g:"PSA 9",paid:840,d:"2026-10-18"},
+ "304767":{g:"PSA 9",paid:190,d:"2020-10-21"},"304797":{g:"PSA 9",paid:300,d:"2026-10-01"},"304761":{g:"PSA 9",paid:46,d:"2026-10-14"},
+ "304729":{g:"PSA 9",paid:95,d:"2026-10-14"},"304785":{g:"Ungraded",paid:10,d:"2026-10-16"},"2019558":{g:"Ungraded",paid:46,d:"2026-10-16"},
+ "304735":{g:"Ungraded",paid:35,d:"2026-10-16"},"2019553":{g:"Ungraded",paid:92,d:"2026-10-16"},"2019917":{g:"Ungraded",paid:90,d:"2026-10-16"},
+ "5209941":{g:"Ungraded",paid:50,d:"2026-10-16"},
+};
+const fmtD=iso=>{const a=iso.split("-");return MON[+a[1]-1]+" "+(+a[2])+" '"+a[0].slice(2);};
+const FL={graded:["f-graded","Active graded"],thin:["f-thin","Thin graded"],none:["f-none","No graded 3 yrs"]};
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const money=v=>"$"+Number(v).toLocaleString(undefined,{maximumFractionDigits:2});
+function saleCell(s){ if(!s) return '<span class="dash">—</span>';
+  const d=s[2].split("-"); const pt=(s[3]||s[4])?`<br><span class="pt"><span class="plat ${/Fanatic/.test(s[3]||'')?'pf':(/eBay/.test(s[3]||'')?'pe':'po')}">${s[3]||''}</span> · ${s[4]||''}</span>`:'';
+  return `<span class="sale"><span class="pr">${money(s[1])}</span><br><span class="meta">PSA ${s[0]} · ${MON[+d[1]-1]} '${d[0].slice(2)}</span>${pt}</span>`; }
+let state={}, maybeState={};
+try{ state=JSON.parse(localStorage.getItem("nprHofWant")||"{}"); }catch(e){}
+try{ maybeState=JSON.parse(localStorage.getItem("nprHofMaybe")||"{}"); }catch(e){}
+Object.keys(OWNED).forEach(spec=>{ if(!(spec in state)) state[spec]=true; });
+["5209985"].forEach(spec=>{ if(!(spec in maybeState) && !state[spec]) maybeState[spec]=true; });
+function save(){ try{ localStorage.setItem("nprHofWant",JSON.stringify(state)); localStorage.setItem("nprHofMaybe",JSON.stringify(maybeState)); }catch(e){} }
+const DRAFTGRP="1998 Draft — Top 10 Picks";
+const ROOKIE=new Set(["304767","304797","304791"]); // HOF rookies shown only in the draft section
+function buildRow(r,body){
+  const [grp,p,spec,num,flag,pick]=r;
+  const owned=OWNED[spec];
+  const checked=!!state[spec], maybe=!!maybeState[spec] && !checked;
+  const sales=SALES5[spec]||[], pop=POPS[spec]||[0,0,0,0,0];
+  const tr=document.createElement("tr"); tr.className = checked ? "done" : (maybe ? "maybe" : "");
+  const url="https://www.psacard.com/spec/psa/"+spec;
+  tr.innerHTML=`<td><input type="checkbox" ${checked?"checked":""}></td>`+
+    `<td>${checked?'':'<button class="mb '+(maybe?'on':'')+'" title="Considering">?</button>'}</td>`+
+    `<td class="pl">${pick?'<span class="pick">#'+pick+'</span>':''}<b>${p}</b> ${num?'<span class="num">'+num+'</span>':''}${owned?'<span class="own">OWNED</span>':''}<br><a href="${url}" target="_blank" rel="noopener">PSA ↗</a></td>`+
+    `<td class="grade">${owned?owned.g:'<span class="dash">—</span>'}</td>`+
+    `<td class="paid">${owned?money(owned.paid)+(owned.d?'<br><span class="pdate">'+fmtD(owned.d)+'</span>':''):'<span class="dash">—</span>'}</td>`+
+    `<td><span class="flag ${FL[flag][0]}">${FL[flag][1]}</span></td>`+
+    `<td>${saleCell(sales[0])}</td><td>${saleCell(sales[1])}</td><td>${saleCell(sales[2])}</td><td>${saleCell(sales[3])}</td><td>${saleCell(sales[4])}</td>`+
+    `<td class="pop big">${pop[0]}</td><td class="pop p10">${pop[1]}</td><td class="pop">${pop[2]}</td><td class="pop">${pop[3]}</td><td class="pop">${pop[4]}</td>`;
+  tr.querySelector("input").addEventListener("change",e=>{ state[spec]=e.target.checked; if(e.target.checked) delete maybeState[spec]; save(); render(); });
+  const mbtn=tr.querySelector(".mb"); if(mbtn) mbtn.addEventListener("click",()=>{ maybeState[spec]=!maybeState[spec]; save(); render(); });
+  body.appendChild(tr);
+}
+function section(title,body){ const sr=document.createElement("tr"); sr.className="sec"; sr.innerHTML=`<td colspan="16">${title}</td>`; body.appendChild(sr); }
+function render(){
+  const body=document.getElementById("body"); body.innerHTML="";
+  const HEAVYGRP="Heavily collected (non-HOF)";
+  const byPop=(a,b)=>(POPS[b[2]]?POPS[b[2]][0]:0)-(POPS[a[2]]?POPS[a[2]][0]:0);
+  const hof = META.filter(r=>r[0]!==DRAFTGRP && r[0]!==HEAVYGRP).sort(byPop);
+  const heavy = META.filter(r=>r[0]===HEAVYGRP).sort(byPop);
+  const draft = META.filter(r=>r[0]===DRAFTGRP);
+  section("Hall of Famers — sorted by total PSA population",body);
+  hof.forEach(r=>buildRow(r,body));
+  section(HEAVYGRP+" — fan favourites, mostly collected ungraded",body);
+  heavy.forEach(r=>buildRow(r,body));
+  section(DRAFTGRP,body);
+  draft.forEach(r=>buildRow(r,body));
+  const all=new Set(), done=new Set(), mb=new Set();
+  META.forEach(r=>{ all.add(r[2]); if(state[r[2]]) done.add(r[2]); if(maybeState[r[2]]&&!state[r[2]]) mb.add(r[2]); });
+  document.getElementById("cnt").textContent=done.size;
+  document.getElementById("tot").textContent=all.size;
+  document.getElementById("fill").style.width=(done.size/all.size*100)+"%";
+  document.getElementById("mbc").textContent=mb.size;
+  document.getElementById("inv").textContent=money(Object.values(OWNED).reduce((a,o)=>a+o.paid,0));
+  document.getElementById("ownc").textContent=Object.keys(OWNED).length;
+}
+document.getElementById("reset").addEventListener("click",()=>{ state={}; maybeState={}; Object.keys(OWNED).forEach(s=>state[s]=true); save(); render(); });
+save(); render();
+
+// ---- Refractor Comparison tab (lazy-built when first opened) ----
+let cmpBuilt=false;
+function buildCompare(){
+  if(cmpBuilt || typeof Chart==="undefined") return; cmpBuilt=true;
+  const yrs=["2021","2022","2023","2024","2025","2026"];
+  const m0=v=>v==null?"—":"$"+Number(v).toLocaleString(undefined,{maximumFractionDigits:0});
+  const jrows=[{k:"Finest NPR",n:12,m:2437,last:"$8,400 · Sep 21",g:"4.2×",npr:1,y:[2612.5,null,null,1907.2,3070,8099.5],c:"#c0392b"},
+    {k:"Finest Refractor (regular)",n:18,m:1337,last:"$4,405 · Jul 24",g:"3.3×",y:[898,699,435.6,1324,1420,4371.25],c:"#e08a1e"},
+    {k:"Finest Refractor w/Coating",n:4,m:806,last:"$5,880 · Aug 31",g:"—",y:[1064.4,null,null,null,null,5880],c:"#2d6cdf"},
+    {k:"Topps Chrome Preview (promo)",n:15,m:7100,last:"$46,800 · Sep 25",g:"19×",y:[12100,null,null,2462.5,27600,46800],c:"#6b3fa0"}];
+  const krows=[{k:"Finest NPR",n:23,m:810,last:"$2,490 · Oct 2",g:"2.6×",npr:1,y:[1111.11,null,380,644,755,1700],c:"#c0392b"},
+    {k:"Finest Refractor (regular)",n:22,m:748,last:"$1,275 · Aug 13",g:"2.75×",y:[808,null,222.5,300,540,824.99],c:"#e08a1e"},
+    {k:"Finest Refractor w/Coating",n:10,m:297,last:"$1,110 · Jan 5",g:"—",y:[480.85,420,null,null,687.24,1110],c:"#2d6cdf"},
+    {k:"Topps Chrome #68 Refractor",n:38,m:1121,last:"$3,500 · Oct 10",g:"4.9×",y:[1124,746,631.5,639,1111,3100],c:"#1b7f3b"}];
+  function fillT(id,rows){ const tb=document.getElementById(id); rows.forEach(r=>{ const tr=document.createElement("tr"); if(r.npr) tr.className="hl";
+    tr.innerHTML=`<td>${r.k}</td><td>${r.n}</td><td><strong>${m0(r.m)}</strong></td><td>${r.last}</td><td>${r.g}</td>`; tb.appendChild(tr); }); }
+  fillT("jtb",jrows); fillT("ktb",krows);
+  function line(cid,rows){ new Chart(document.getElementById(cid),{type:"line",
+    data:{labels:yrs,datasets:rows.map(r=>({label:r.k,data:r.y,borderColor:r.c,backgroundColor:r.c,borderWidth:2.5,tension:.25,spanGaps:true,pointRadius:3}))},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{type:"logarithmic",ticks:{callback:v=>"$"+Number(v).toLocaleString()}}},plugins:{legend:{position:"bottom",labels:{boxWidth:12,font:{size:11}}}}}}); }
+  line("jChart",jrows); line("kChart",krows);
+  new Chart(document.getElementById("basketChart"),{type:"line",
+    data:{labels:["2021","2024","2025","2026"],datasets:[
+      {label:"NPR basket (8 cards, PSA 9)",data:[4946,3139,4730,11397],borderColor:"#c0392b",backgroundColor:"#c0392b",borderWidth:3,tension:.25,pointRadius:4},
+      {label:"Regular Refractor basket",data:[3257,2172,2584,6277],borderColor:"#e08a1e",backgroundColor:"#e08a1e",borderWidth:3,tension:.25,pointRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>"$"+Number(v).toLocaleString()}}},plugins:{legend:{position:"bottom"}}}});
+  new Chart(document.getElementById("premChart"),{type:"bar",
+    data:{labels:["Jordan 1.85×","Kobe 2.06×","Carter 2.37×","Dirk 0.99×","Pierce 1.65×","Garnett 2.16×","Duncan 1.67×","Iverson 1.47×"],
+      datasets:[{label:"Non-Protected Refractor",data:[8100,1700,710,607,280,172.5,166,359],backgroundColor:"#c0392b"},
+        {label:"Regular Refractor",data:[4371,825,300,611,170,80,99.67,245],backgroundColor:"#e08a1e"}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{type:"logarithmic",ticks:{callback:v=>"$"+Number(v).toLocaleString()}},x:{ticks:{font:{size:10},callback:function(v){return this.getLabelForValue(v).split(" ");}}}},plugins:{legend:{position:"bottom"}}}});
+  const nr=[["Michael Jordan #81",1907,8100,1324,4371,"1.85×"],["Kobe Bryant #175",644,1700,300,825,"2.06×"],["Vince Carter #230",200,710,200,300,"2.37×"],["Dirk Nowitzki #234",311,607,277,611,"0.99×"],["Paul Pierce #235",77,280,71,170,"1.65×"],["Kevin Garnett #14",null,172.5,null,80,"2.16×"],["Tim Duncan #190",null,166,59,99.67,"1.67×"],["Allen Iverson #42",154,359,39,245,"1.47×"]];
+  const nb=document.getElementById("nrtb"); nr.forEach(r=>{const[c,a,b2,d,e,p]=r;const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${c}</td><td>${m0(a)}</td><td><strong>${m0(b2)}</strong></td><td>${m0(d)}</td><td><strong>${m0(e)}</strong></td><td style="font-weight:700;color:${parseFloat(p)>=1.6?'#1b7f3b':(parseFloat(p)<1.1?'#b0266c':'#b8860b')}">${p}</td>`; nb.appendChild(tr);});
+}
+let baroBuilt=false;
+function buildBaro(){
+  if(baroBuilt||typeof Chart==="undefined") return; baroBuilt=true;
+  const $=id=>document.getElementById(id);
+  const yrs=["2017","2018","2019","2020","2021","2022","2023","2024","2025","2026"];
+  const p9=[3189,3528,5352,12418,33853,18541,14693,16478,21426,35814];
+  const vol=[72,105,130,295,256,85,37,41,166,189];
+  const p10=[17021,21892,28216,93867,423329,208491,166171,168000,194952,362433];
+  new Chart($("cycleChart"),{ data:{ labels:yrs, datasets:[
+    {type:"bar",label:"Sales (volume)",data:vol,backgroundColor:"#9fb4d6",yAxisID:"y2",order:2},
+    {type:"line",label:"PSA 9 avg price",data:p9,borderColor:"#c0392b",backgroundColor:"#c0392b",borderWidth:3,tension:.25,pointRadius:3,yAxisID:"y",order:1}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{position:"left",title:{display:true,text:"PSA 9 avg ($)"},ticks:{callback:v=>"$"+(v/1000)+"k"}},y2:{position:"right",grid:{drawOnChartArea:false},title:{display:true,text:"# sales"}}},plugins:{legend:{position:"bottom"},tooltip:{callbacks:{label:c=>c.dataset.label+": "+(c.dataset.yAxisID==="y"?"$"+c.parsed.y.toLocaleString():c.parsed.y)}}}}});
+  const moL=["Oct '25","Nov","Dec","Jan '26","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"];
+  const mo=[27865,27078,26546,28170,29254,26920,29440,39507,33491,37223,45616,42992,45332];
+  new Chart($("moChart"),{type:"line",data:{labels:moL,datasets:[{label:"PSA 9 monthly avg",data:mo,borderColor:"#c0392b",backgroundColor:"#c0392b",borderWidth:3,tension:.2,pointRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>"$"+(v/1000)+"k"}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>"$"+c.parsed.y.toLocaleString()}}}}});
+  const base9=p9[2],base10=p10[2];
+  new Chart($("divChart"),{type:"line",data:{labels:yrs,datasets:[
+    {label:"PSA 9 (liquid)",data:p9.map(v=>Math.round(v/base9*100)),borderColor:"#c0392b",backgroundColor:"#c0392b",borderWidth:2.5,tension:.25,pointRadius:3},
+    {label:"PSA 10 (trophy)",data:p10.map(v=>Math.round(v/base10*100)),borderColor:"#6b3fa0",backgroundColor:"#6b3fa0",borderWidth:2.5,tension:.25,pointRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{type:"logarithmic",title:{display:true,text:"Index (2019=100)"}}},plugins:{legend:{position:"bottom"}}}});
+  const ind=[
+   ["Price vs prior bubble","<span class='dot r'>●</span> Red — PSA 9 above its 2021 avg (new high)"],
+   ["Parabolic acceleration","<span class='dot a'>●</span> Amber — August +22% vertical"],
+   ["Volume vs price","<span class='dot g'>●</span> Green — volume still rising with price (no divergence)"],
+   ["Trophy end (PSA 10)","<span class='dot g'>●</span> Green — still 15-45% below 2021"],
+   ["Low-end / commons froth","<span class='dot a'>●</span> Amber — NPR commons flooded in at ~$20"],
+   ["Seller greed / bid-ask gap","<span class='dot a'>●</span> Amber — eBay asks 1.5-2× over comps"],
+   ["Grading supply response","<span class='dot a'>●</span> Amber — graded supply rising into the move"]];
+  const tb=$("indic"); ind.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML=`<td class="c"><strong>${r[0]}</strong></td><td class="c">${r[1]}</td>`;tb.appendChild(tr);});
+}
+let kobeBuilt=false;
+function buildKobe(){
+  if(kobeBuilt||typeof Chart==="undefined") return; kobeBuilt=true;
+  const yrs=["2020","2021","2022","2023","2024","2025","2026"];
+  const npr=[251,1111,null,380,644,755,1700];
+  const ref=[280,808,null,223,300,540,825];
+  const tcr=[336,1512,746,632,639,1111,3100];
+  const m0=v=>v==null?"—":"$"+Number(v).toLocaleString(undefined,{maximumFractionDigits:0});
+  new Chart(document.getElementById("kobeChart"),{type:"line",
+    data:{labels:yrs,datasets:[
+      {label:"NPR #175",data:npr,borderColor:"#c0392b",backgroundColor:"#c0392b",borderWidth:3,tension:.25,spanGaps:true,pointRadius:3},
+      {label:"Finest Refractor #175",data:ref,borderColor:"#e08a1e",backgroundColor:"#e08a1e",borderWidth:2.5,tension:.25,spanGaps:true,pointRadius:3},
+      {label:"Topps Chrome #68 Refractor",data:tcr,borderColor:"#1b7f3b",backgroundColor:"#1b7f3b",borderWidth:2.5,tension:.25,spanGaps:true,pointRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{type:"logarithmic",ticks:{callback:v=>"$"+Number(v).toLocaleString()}}},plugins:{legend:{position:"bottom",labels:{boxWidth:12,font:{size:11}}}}}});
+  const rr=[["2020",251,280,336],["2021",1111,808,1512],["2023",380,223,632],["2024",644,300,639],["2025",755,540,1111],["2026",1700,825,3100]];
+  const tb=document.getElementById("kobeTb");
+  rr.forEach(r=>{const[y,a,b,c]=r;const r1=(a/b),r2=(a/c);const tr=document.createElement("tr");if(y==="2026")tr.className="hl";
+    tr.innerHTML=`<td><strong>${y}</strong></td><td><strong>${m0(a)}</strong></td><td>${m0(b)}</td><td>${m0(c)}</td><td>${r1.toFixed(2)}×</td><td>${r2.toFixed(2)}×</td>`;tb.appendChild(tr);});
+  new Chart(document.getElementById("kobeRatio"),{type:"line",
+    data:{labels:["2020","2021","2023","2024","2025","2026"],datasets:[
+      {label:"NPR ÷ Finest Refractor",data:[0.90,1.38,1.71,2.15,1.40,2.06],borderColor:"#c0392b",backgroundColor:"#c0392b",borderWidth:3,tension:.25,pointRadius:4},
+      {label:"NPR ÷ Topps Chrome Refractor",data:[0.75,0.73,0.60,1.01,0.68,0.55],borderColor:"#1b7f3b",backgroundColor:"#1b7f3b",borderWidth:3,tension:.25,pointRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"NPR price ÷ comp price"},ticks:{callback:v=>v+"×"}}},plugins:{legend:{position:"bottom"}}}});
+  const imp=[["Finest Refractor","$825","1.5–2.0×","$1,240–1,700"],["Topps Chrome Refractor","$3,100","0.55–0.70×","$1,700–2,170"],["NPR own 2026 reality","—","median / last","$1,700 / $2,490"]];
+  const ib=document.getElementById("kobeImp");
+  imp.forEach(r=>{const tr=document.createElement("tr");if(r[0].startsWith("NPR"))tr.className="hl";
+    tr.innerHTML=`<td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td><strong>${r[3]}</strong></td>`;ib.appendChild(tr);});
+}
+document.querySelectorAll('.tabbtn').forEach(btn=>{ btn.addEventListener('click',()=>{
+  document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active'); document.getElementById(btn.dataset.pane).classList.add('active');
+  if(btn.dataset.pane==='paneCMP'){ buildCompare(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
+  if(btn.dataset.pane==='paneBARO'){ buildBaro(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
+  if(btn.dataset.pane==='paneKOBE'){ buildKobe(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
+}); });
+</script>
+</body>
+</html>
