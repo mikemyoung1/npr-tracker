@@ -44,6 +44,32 @@
   .num{ color:var(--muted); font-weight:400; }
   td.grade{ font-weight:600; color:var(--navy); white-space:nowrap; } td.paid{ font-weight:600; font-variant-numeric:tabular-nums; }
 .pdate{ font-weight:500; font-size:11px; color:#8a94a6; white-space:nowrap; }
+.chk{ margin-top:10px; }
+.chkbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+.chkSum{ font-weight:600; color:var(--navy); }
+.chkToggle{ font-size:13px; color:var(--muted); cursor:pointer; user-select:none; display:flex; align-items:center; gap:6px; }
+.owndot{ display:inline-block; width:11px; height:11px; border-radius:3px; background:#8ed6a4; border:1px solid #1b7f3b; vertical-align:-1px; }
+#chkTable th.sortable{ cursor:pointer; white-space:nowrap; }
+#chkTable th.sortable:hover{ color:var(--navy); }
+#chkTable th.popgrp{ background:#15294a; text-align:center; font-size:9.5px; }
+#chkTable tr.own{ background:#bfe8cc; }
+#chkTable tr.own td{ color:#13331f; }
+#chkTable tr.own td.cp{ font-weight:700; color:#145c2e; }
+#chkTable tr.own td.pop{ color:#13331f; }
+#chkTable tr.own td.pop.p10{ color:#145c2e; }
+#chkTable .ownchk{ display:inline-block; font-weight:800; color:#fff; background:#1b7f3b; border-radius:5px; padding:0 6px; font-size:12px; }
+#chkTable td.cnum{ color:var(--muted); font-variant-numeric:tabular-nums; }
+#chkTable tr.own td.cnum{ color:#2f5d41; }
+#chkTable td.cg{ white-space:nowrap; font-weight:600; }
+#chkTable td.cpaid{ font-variant-numeric:tabular-nums; white-space:nowrap; }
+.psal{ font-size:11px; font-weight:600; color:var(--blue); text-decoration:none; }
+#chkTable tr.own .psal{ color:#145c2e; text-decoration:underline; }
+#chkTable tr.want{ background:#eafaef; }
+.wantdot{ display:inline-block; width:11px; height:11px; border-radius:3px; background:#eafaef; border:1px solid #8ed6a4; vertical-align:-1px; }
+#chkTable td.cw{ text-align:center; }
+#chkTable .wchk{ width:16px; height:16px; accent-color:var(--green); cursor:pointer; }
+.bAS{ display:inline-block; font-size:9px; font-weight:800; color:#fff; background:#2d6cdf; border-radius:4px; padding:1px 4px; vertical-align:1px; letter-spacing:.02em; }
+.bHOF{ display:inline-block; font-size:9px; font-weight:800; color:#fff; background:#b8860b; border-radius:4px; padding:1px 4px; vertical-align:1px; letter-spacing:.02em; }
   .sale .pr{ font-weight:600; } .sale .meta{ color:var(--muted); font-size:10.5px; white-space:nowrap; }
   .sale .pt{ font-size:9.5px; white-space:nowrap; }
   .sale .plat{ font-weight:700; } .plat.pe{ color:#6b7688; } .plat.pf{ color:#6b3fa0; } .plat.po{ color:#1b7f3b; } .sale .pt{ color:var(--muted); }
@@ -114,8 +140,35 @@
   </div>
 
   <div class="cav">
-    <strong>Your cards (10):</strong> Vince Carter PSA 9 $190, Paul Pierce PSA 9 $300, Antawn Jamison PSA 9 $50, Karl Malone PSA 9 $95, Larry Hughes raw $10, Gary Payton raw $46, Chris Webber raw $35, Hakeem Olajuwon raw $92, Patrick Ewing raw $90, Ben Wallace raw $50.<br><br>
     <strong>Columns.</strong> Sales 1-5 = the five most recent PSA-graded sales at any grade (price · grade · month). Each sale also shows platform (eBay / <span style="color:#6b3fa0;font-weight:700">Fanatics</span> / Goldin) and type (Auc=auction, BIN=buy-it-now, Offer=best offer). Population = PSA total graded and the per-grade counts (10 / 9 / 8 / 7). Carter, Nowitzki and Pierce appear in both the HOF list and the draft top-10; one checkbox controls each.
+  </div>
+
+  <div class="chk">
+    <h2 style="margin:22px 0 2px">Full set checklist — every 1998 Finest NPR card</h2>
+    <p class="csub" style="margin:0 0 10px"><span class="owndot"></span> dark green = owned · <span class="wantdot"></span> light green = wanted (tick the Wanted box). <span class="bAS">AS</span> = made an All-Star game, <span class="bHOF">HOF</span> = Hall of Famer. <strong>Graded sales</strong> = total PSA-graded sales on record (PSA ↗ links the card where sales exist). <strong>PSA 9 / PSA 10</strong> columns are current <strong>PSA Population Report</strong> counts. Click a column header to sort.</p>
+    <div class="chkbar">
+      <span id="chkSummary" class="chkSum"></span>
+      <label class="chkToggle"><input type="checkbox" id="ownOnly"> Show owned only</label>
+    </div>
+    <div class="scroll">
+      <table id="chkTable">
+        <thead>
+        <tr><th colspan="8"></th><th colspan="2" class="popgrp">PSA Pop Report</th></tr>
+        <tr>
+          <th data-k="wanted" class="sortable">Wanted</th>
+          <th data-k="num" class="sortable">#</th>
+          <th data-k="player" class="sortable">Player</th>
+          <th data-k="owned" class="sortable">Owned</th>
+          <th data-k="grade" class="sortable">Grade</th>
+          <th data-k="paid" class="sortable">Paid</th>
+          <th data-k="date" class="sortable">Date</th>
+          <th data-k="sales" class="sortable pop">Graded sales</th>
+          <th data-k="p9" class="sortable pop">PSA 9</th>
+          <th data-k="p10" class="sortable pop">PSA 10</th>
+        </tr></thead>
+        <tbody id="chkBody"></tbody>
+      </table>
+    </div>
   </div>
   </div><!-- /paneWL -->
 
@@ -243,6 +296,7 @@ const META=[
  ["Heavily collected (non-HOF)","Jayson Williams","304727","",T],
  ["Heavily collected (non-HOF)","Muggsy Bogues","2020596","",T],
  ["Heavily collected (non-HOF)","Shawn Kemp","5209545","",N],
+ ["Heavily collected (non-HOF)","Rasheed Wallace","304712","#188",N],
  ["1998 Draft — Top 10 Picks","Michael Olowokandi","304743","#226",T,1],
  ["1998 Draft — Top 10 Picks","Mike Bibby","304749","#227",T,2],
  ["1998 Draft — Top 10 Picks","Raef LaFrentz","304755","#228",T,3],
@@ -307,6 +361,7 @@ const SALES5={
 };
 // spec -> [total, PSA10, PSA9, PSA8, PSA7]
 const POPS={
+"304712":[1,0,1,0,0],
 "304664":[73,3,38,21,6],"304696":[17,6,10,1,0],"2020586":[6,5,0,0,1],"5210023":[9,1,5,2,1],"2020860":[3,1,2,0,0],
 "304705":[81,10,49,18,3],"304637":[20,5,12,3,0],"304648":[20,1,14,4,0],"304729":[11,2,8,0,1],"2019558":[7,0,3,4,0],
 "1876704":[8,4,4,0,0],"2020838":[6,2,3,1,0],"2020594":[3,1,0,1,1],"304721":[35,1,22,10,2],"304654":[22,0,12,9,1],
@@ -321,11 +376,19 @@ const POPS={
 const OWNED={
  "304791":{g:"PSA 9",paid:840,d:"2026-10-18"},
  "304767":{g:"PSA 9",paid:190,d:"2020-10-21"},"304797":{g:"PSA 9",paid:300,d:"2026-10-01"},"304761":{g:"PSA 9",paid:46,d:"2026-10-14"},
- "304729":{g:"PSA 9",paid:95,d:"2026-10-14"},"304785":{g:"Ungraded",paid:10,d:"2026-10-16"},"2019558":{g:"Ungraded",paid:46,d:"2026-10-16"},
- "304735":{g:"Ungraded",paid:35,d:"2026-10-16"},"2019553":{g:"Ungraded",paid:92,d:"2026-10-16"},"2019917":{g:"Ungraded",paid:90,d:"2026-10-16"},
- "5209941":{g:"Ungraded",paid:50,d:"2026-10-16"},
+ "304729":{g:"PSA 9",paid:113.17,d:"2026-10-14"},"304785":{g:"Ungraded",paid:10.49,d:"2026-10-14"},"2019558":{g:"Ungraded",paid:54.49,d:"2026-10-15"},
+ "304735":{g:"Ungraded",paid:45.67,d:"2026-10-15"},"2019553":{g:"Ungraded",paid:101.66,d:"2026-10-15"},"2019917":{g:"Ungraded",paid:99.06,d:"2026-10-15"},
+ "5209941":{g:"Ungraded",paid:60.01,d:"2026-10-16"},
+ "304710":{g:"Ungraded",paid:40.57,d:"2026-10-19"},"2020860":{g:"Ungraded",paid:28.81,d:"2026-10-19"},"2020635":{g:"Ungraded",paid:19.22,d:"2026-10-19"},
+ "4591661":{g:"Ungraded",paid:18.81,d:"2026-10-19"},"304755":{g:"Ungraded",paid:17.05,d:"2026-10-19"},
 };
 const fmtD=iso=>{const a=iso.split("-");return MON[+a[1]-1]+" "+(+a[2])+" '"+a[0].slice(2);};
+// Full NPR checklist: [cardNo, player, PSA9 pop, PSA10 pop]
+const CHECKLIST=[[1,"Chris Mills",0,1],[2,"Matt Maloney",1,1],[3,"Sam Mitchell",2,0],[4,"Corliss Williamson",0,1],[5,"Bryant Reeves",0,1],[7,"Eddie Jones",2,1],[8,"Ray Allen",7,1],[9,"Larry Johnson",1,1],[12,"Hakeem Olajuwon",2,0],[13,"Gary Trent",0,0],[14,"Kevin Garnett",12,5],[15,"Dikembe Mutombo",0,5],[17,"Keith Van Horn",0,0],[19,"Tim Hardaway",2,1],[20,"Blue Edwards",0,1],[21,"David Wesley",0,1],[24,"Rodney Rogers",2,0],[25,"Antonio Davis",1,0],[27,"Kelvin Cato",0,1],[28,"Tracy McGrady",3,2],[29,"Mookie Blaylock",0,1],[30,"Ron Harper",2,0],[33,"John Stockton",6,1],[36,"Mark Strickland",0,1],[37,"Rod Strickland",0,0],[40,"Shaquille O'Neal",14,1],[42,"Allen Iverson",12,0],[43,"Travis Knight",0,0],[44,"Cedric Henderson",0,1],[45,"Steve Kerr",1,4],[47,"Darrick Martin",0,1],[48,"Shandon Anderson",1,1],[49,"Shareef Abdur-Rahim",2,0],[51,"Jason Kidd",3,2],[52,"Calbert Cheaney",0,1],[53,"Antoine Walker",1,0],[54,"Greg Anthony",0,1],[55,"Jeff Hornacek",0,0],[56,"Reggie Miller",5,1],[58,"Derek Strong",0,1],[60,"Shawn Bradley",0,0],[61,"Matt Bullard",0,1],[62,"Terrell Brandon",1,1],[63,"Dan Majerle",0,0],[64,"Jim Jackson",0,1],[67,"Khalid Reeves",1,1],[68,"Toni Kukoc",3,0],[71,"Jalen Rose",3,1],[72,"Tyrone Corbin",0,1],[73,"Anthony Mason",1,0],[74,"Lamond Murray",1,0],[77,"Brian Shaw",1,1],[81,"Michael Jordan",38,3],[82,"LaPhonso Ellis",0,0],[83,"David Robinson",4,4],[84,"Christian Laettner",0,0],[88,"Shawn Kemp",0,1],[89,"Gary Payton",3,0],[90,"Doug Christie",0,1],[91,"Voshon Lenard",0,1],[92,"Detlef Schrempf",0,1],[93,"Walter McCarty",1,1],[94,"Sam Cassell",0,1],[95,"Jerry Stackhouse",0,0],[96,"Billy Owens",0,0],[97,"Matt Geiger",2,0],[99,"Bobby Jackson",1,1],[101,"Andrew DeClercq",0,1],[102,"Vlade Divac",0,1],[106,"Adonal Foyle",0,0],[107,"Isaac Austin",0,0],[109,"Darrell Armstrong",1,2],[110,"Aaron McKie",0,1],[111,"Stacey Augmon",0,1],[112,"Anthony Johnson",0,1],[113,"Vinny Del Negro",0,0],[115,"Lee Mayberry",1,0],[116,"Tracy Murray",2,1],[117,"Scottie Pippen",5,0],[118,"Sam Perkins",0,1],[119,"Derek Fisher",0,1],[121,"Dale Davis",0,1],[122,"B.J. Armstrong",0,1],[123,"Charles Barkley",7,2],[125,"Checklist",0,2],[126,"Alonzo Mourning",5,0],[127,"Kerry Kittles",0,1],[128,"Eldridge Recasner",0,1],[129,"Dell Curry",1,0],[130,"Jamal Mashburn",0,1],[131,"Eric Piatkowski",2,0],[133,"Pete Chilcutt",0,1],[134,"Dennis Rodman",10,6],[135,"Patrick Ewing",3,3],[136,"Danny Schayes",1,0],[137,"John Williams",0,1],[138,"Joe Smith",2,0],[139,"Tariq Abdul-Wahad",0,1],[140,"Vin Baker",0,1],[142,"Chris Carr",0,1],[143,"John Starks",2,0],[144,"Felton Spencer",0,0],[145,"Mark Jackson",1,0],[146,"Dana Barros",0,1],[147,"Eric Williams",0,0],[149,"Joe Dumars",1,3],[150,"Steve Smith",0,1],[152,"A.C. Green",0,1],[153,"Dee Brown",1,1],[154,"Brian Grant",0,0],[155,"Tim Thomas",0,1],[156,"Howard Eisley",0,1],[158,"Maurice Taylor",0,1],[159,"Tyrone Hill",0,0],[161,"Rodrick Rhodes",0,0],[162,"Muggsy Bogues",0,1],[163,"Kenny Anderson",1,1],[164,"Zydrunas Ilgauskas",0,1],[165,"Grant Hill",10,6],[166,"Lorenzen Wright",0,0],[168,"Bobby Phills",0,0],[169,"Michael Finley",0,0],[170,"Anfernee Hardaway",5,3],[172,"P.J. Brown",0,1],[173,"Clifford Robinson",0,0],[174,"Olden Polynice",1,1],[175,"Kobe Bryant",49,10],[176,"Sean Elliott",1,0],[177,"Latrell Sprewell",4,1],[178,"Rik Smits",1,1],[179,"Darrell Armstrong",1,0],[180,"Stephon Marbury",3,2],[181,"Brent Price",1,1],[184,"Anthony Parker",0,0],[185,"Glenn Robinson",1,1],[188,"Rasheed Wallace",1,0],[189,"Aaron Williams",0,2],[190,"Tim Duncan",22,1],[191,"Chauncey Billups",2,0],[192,"Jim McIlvaine",2,1],[193,"Chris Mullin",1,1],[194,"George Lynch",1,1],[195,"Damon Stoudamire",0,1],[196,"Bryon Russell",0,0],[199,"Alan Henderson",0,0],[200,"Jayson Williams",2,0],[201,"Ben Wallace",2,2],[203,"Walt Williams",0,0],[204,"Cherokee Parks",0,1],[205,"Brent Barry",1,1],[206,"Hubert Davis",1,1],[207,"Terry Davis",0,0],[208,"Loy Vaught",1,1],[209,"Adam Keefe",0,1],[210,"Karl Malone",8,2],[211,"Chuck Person",0,2],[212,"Chris Childs",1,1],[213,"Rony Seikaly",1,0],[214,"Ervin Johnson",1,1],[216,"Jerome Williams",1,0],[217,"Glen Rice",0,0],[218,"Steve Nash",1,0],[219,"Nick Van Exel",0,0],[220,"Chris Webber",4,4],[222,"Antonio Daniels",0,0],[223,"Mitch Richmond",0,1],[224,"Otis Thorpe",0,1],[225,"Charles Oakley",1,0],[226,"Michael Olowokandi",6,2],[227,"Mike Bibby",28,9],[228,"Raef Lafrentz",7,6],[229,"Antawn Jamison",39,15],[230,"Vince Carter",132,32],[231,"Robert Traylor",5,1],[232,"Jason Williams",39,13],[233,"Larry Hughes",21,10],[234,"Dirk Nowitzki",59,14],[235,"Paul Pierce",55,13],[236,"Bonzi Wells",11,8],[237,"Michael Doleac",5,1],[238,"Keon Clark",2,2],[239,"Michael Dickerson",8,5],[240,"Matt Harpring",3,3],[241,"Bryce Drew",0,0],[242,"Pat Garrity",0,1],[243,"Roshown McLeod",0,1],[244,"Ricky Davis",6,2],[245,"Brian Skinner",0,0],[246,"Tyronn Lue",2,0],[247,"Felipe Lopez",0,0],[248,"Sam Jacobson",0,0],[249,"Corey Benjamin",0,0],[250,"Nazr Mohammed",0,0]];
+// Owned by card number: cardNo -> [grade, paid, date]
+const SPECNUM={8:"5209820",12:"2019553",14:"304637",15:"2020586",19:"2020860",28:"2020851",33:"2019552",40:"304648",42:"304654",51:"2020838",56:"5210023",68:"5209985",76:"14278336",81:"304664",83:"1876704",88:"5209545",89:"2019558",102:"2020635",117:"304679",123:"304681",126:"5209399",134:"5209757",135:"2019917",149:"304688",162:"2020596",165:"304696",170:"304699",175:"304705",180:"304710",188:"304712",190:"304721",191:"4591661",193:"2019920",200:"304727",201:"5209941",210:"304729",218:"2020593",220:"304735",223:"2020594",226:"304743",227:"304749",228:"304755",229:"304761",230:"304767",231:"304773",232:"304779",233:"304785",234:"304791",235:"304797"};
+const SALESCNT={8:5,12:3,14:7,15:1,19:1,28:1,33:3,40:14,42:9,51:2,56:7,68:2,76:0,81:21,83:3,88:1,89:6,102:0,117:4,123:7,126:6,134:17,135:4,149:2,162:5,165:7,170:12,175:39,180:7,188:4,190:11,191:6,193:4,200:4,201:2,210:6,218:4,220:5,223:1,226:1,227:6,228:2,229:14,230:49,231:4,232:23,233:4,234:32,235:28};
+const OWNEDNUM={12:["Raw",101.66,"2026-10-15"],19:["Raw",28.81,"2026-10-19"],53:["Raw",17.92,"2026-10-19"],63:["Raw",14.48,"2026-10-19"],89:["Raw",54.49,"2026-10-15"],95:["Raw",15.93,"2026-10-19"],102:["Raw",19.22,"2026-10-19"],135:["Raw",99.06,"2026-10-15"],143:["Raw",13.59,"2026-10-19"],169:["Raw",10.66,"2026-10-19"],180:["Raw",40.57,"2026-10-19"],191:["Raw",18.81,"2026-10-19"],201:["Raw",60.01,"2026-10-16"],210:["PSA 9",113.17,"2026-10-14"],216:["Raw",4.85,"2026-10-14"],217:["Raw",20.56,"2026-10-19"],219:["Raw",19.43,"2026-10-19"],220:["Raw",45.67,"2026-10-15"],225:["Raw",14.38,"2026-10-19"],228:["Raw",17.05,"2026-10-19"],229:["PSA 9",46,"2026-10-14"],230:["PSA 9",190,"2020-10-21"],233:["Raw",10.49,"2026-10-14"],234:["PSA 9",840,"2026-10-18"],235:["PSA 9",300,"2026-10-01"],236:["Raw",11.48,"2026-10-14"],238:["Raw",8.43,"2026-10-14"],239:["Raw",7.17,"2026-10-14"],243:["Raw",8.43,"2026-10-14"],246:["Raw",14.54,"2026-10-14"]};
 const FL={graded:["f-graded","Active graded"],thin:["f-thin","Thin graded"],none:["f-none","No graded 3 yrs"]};
 const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const money=v=>"$"+Number(v).toLocaleString(undefined,{maximumFractionDigits:2});
@@ -384,6 +447,53 @@ function render(){
 }
 document.getElementById("reset").addEventListener("click",()=>{ state={}; maybeState={}; Object.keys(OWNED).forEach(s=>state[s]=true); save(); render(); });
 save(); render();
+
+// ---- Full set checklist ----
+// Career All-Star (ever) and Hall of Fame tags, by card number
+const ASSET=new Set([7,8,9,12,14,15,19,25,28,29,33,40,42,49,51,53,55,56,62,63,73,81,83,84,88,89,92,94,95,102,117,121,122,123,126,134,135,140,143,146,149,150,159,163,164,165,169,170,173,175,176,177,178,180,185,188,190,191,193,200,201,210,217,218,219,220,223,225,229,230,234,235]);
+const HOFSET=new Set([8,12,14,15,19,28,33,40,42,51,56,68,81,83,89,102,117,123,126,134,135,149,165,175,190,191,193,201,210,218,220,223,230,234,235]);
+let chkWant={}; try{ chkWant=JSON.parse(localStorage.getItem("nprChkWanted")||"{}"); }catch(e){}
+function chkSave(){ try{ localStorage.setItem("nprChkWanted",JSON.stringify(chkWant)); }catch(e){} }
+const isWanted=n=>!!chkWant[n] || (n in OWNEDNUM);
+let chkSort={k:"num",dir:1};
+function renderChecklist(){
+  const body=document.getElementById("chkBody"); if(!body) return;
+  const ownedOnly=document.getElementById("ownOnly").checked;
+  let rows=CHECKLIST.map(c=>{const o=OWNEDNUM[c[0]]||null;const sc=(c[0] in SALESCNT)?SALESCNT[c[0]]:-1;return {num:c[0],player:c[1],p9:c[2],p10:c[3],owned:o?1:0,grade:o?o[0]:"",paid:o?o[1]:null,date:o?o[2]:"",sales:sc,wanted:isWanted(c[0])?1:0};});
+  if(ownedOnly) rows=rows.filter(r=>r.owned);
+  const k=chkSort.k,dir=chkSort.dir;
+  rows.sort((a,b)=>{let x=a[k],y=b[k]; if(k==="paid"){x=x==null?-1:x;y=y==null?-1:y;} if(typeof x==="string"){return x.localeCompare(y)*dir;} return (x-y)*dir;});
+  body.innerHTML="";
+  rows.forEach(r=>{
+    const tr=document.createElement("tr"); tr.className = r.owned ? "own" : (r.wanted ? "want" : "");
+    const grd=r.owned?(r.grade==="Raw"?"Ungraded":r.grade):'<span class="dash">—</span>';
+    const paid=r.paid!=null?money(r.paid):'<span class="dash">—</span>';
+    const dt=r.date?fmtD(r.date):'<span class="dash">—</span>';
+    const spec=SPECNUM[r.num];
+    const link=(spec&&r.sales>0)?`<br><a class="psal" href="https://www.psacard.com/spec/psa/${spec}" target="_blank" rel="noopener">PSA ↗</a>`:'';
+    const salesCell=r.sales>=0?r.sales:((r.p9===0&&r.p10===0)?0:'<span class="dash">—</span>');
+    const tags=(ASSET.has(r.num)?' <span class="bAS">AS</span>':'')+(HOFSET.has(r.num)?' <span class="bHOF">HOF</span>':'');
+    const wchk=`<input type="checkbox" class="wchk" ${r.wanted?"checked":""} ${r.owned?"disabled":""}>`;
+    tr.innerHTML=`<td class="cw">${wchk}</td>`+
+      `<td class="cnum">${r.num}</td><td class="cp">${r.player}${tags}${link}</td>`+
+      `<td>${r.owned?'<span class="ownchk">✓</span>':'<span class="dash">—</span>'}</td>`+
+      `<td class="cg">${grd}</td><td class="cpaid">${paid}</td><td class="cpaid">${dt}</td>`+
+      `<td class="pop">${salesCell}</td><td class="pop">${r.p9}</td><td class="pop p10">${r.p10}</td>`;
+    const cb=tr.querySelector(".wchk");
+    if(cb && !r.owned) cb.addEventListener("change",e=>{ if(e.target.checked) chkWant[r.num]=true; else delete chkWant[r.num]; chkSave(); renderChecklist(); });
+    body.appendChild(tr);
+  });
+  const nOwned=Object.keys(OWNEDNUM).length;
+  const nWanted=CHECKLIST.filter(c=>isWanted(c[0])).length;
+  const inv=Object.values(OWNEDNUM).reduce((a,o)=>a+o[1],0);
+  document.getElementById("chkSummary").innerHTML="<strong>"+nOwned+"</strong> of <strong>"+nWanted+"</strong> wanted owned · "+money(inv)+" invested · "+CHECKLIST.length+" NPR cards in set";
+}
+document.querySelectorAll("#chkTable th.sortable").forEach(th=>{ th.addEventListener("click",()=>{
+  const k=th.dataset.k; if(chkSort.k===k) chkSort.dir*=-1; else chkSort={k,dir:(k==="player"?1:-1)};
+  renderChecklist();
+}); });
+document.getElementById("ownOnly").addEventListener("change",renderChecklist);
+renderChecklist();
 
 // ---- Refractor Comparison tab (lazy-built when first opened) ----
 let cmpBuilt=false;
