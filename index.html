@@ -71,6 +71,11 @@
 .bAS{ display:inline-block; font-size:9px; font-weight:800; color:#fff; background:#2d6cdf; border-radius:4px; padding:1px 4px; vertical-align:1px; letter-spacing:.02em; }
 .bHOF{ display:inline-block; font-size:9px; font-weight:800; color:#fff; background:#b8860b; border-radius:4px; padding:1px 4px; vertical-align:1px; letter-spacing:.02em; }
 #yrTable td{ text-align:center; font-variant-numeric:tabular-nums; } #yrTable .yn{ font-size:10px; color:var(--muted); }
+#setAggTable td{ text-align:center; font-variant-numeric:tabular-nums; }
+#setPlayTable th.sortable{ cursor:pointer; white-space:nowrap; } #setPlayTable th.sortable:hover{ color:#9fb4d6; }
+#setPlayTable td{ text-align:center; font-variant-numeric:tabular-nums; } #setPlayTable td.sc{ color:var(--ink); } #setPlayTable td.cnum{ color:var(--muted); }
+#setPlayTable tbody tr:hover{ background:#f3f6fb; }
+#setPlayTable th.gdiv, #setPlayTable td.gdiv{ border-left:2px solid #c3ccda; }
 .caveat{ margin:10px 0 2px; padding:10px 13px; background:#fff4e0; border:1px solid #e8c37a; border-left:4px solid #b8860b; border-radius:8px; font-size:12.5px; line-height:1.5; color:#5c4a16; }
 .caveat strong{ color:#7a5c00; }
   .sale .pr{ font-weight:600; } .sale .meta{ color:var(--muted); font-size:10.5px; white-space:nowrap; }
@@ -116,6 +121,7 @@
     <button class="tabbtn" data-pane="paneBARO">Market Barometer</button>
     <button class="tabbtn" data-pane="paneKOBE">Kobe Fair Value</button>
     <button class="tabbtn" data-pane="paneYR">PSA 9 by Year</button>
+    <button class="tabbtn" data-pane="paneSET">Set Sales by Year</button>
   </div>
 
   <div id="paneWL" class="pane active">
@@ -270,6 +276,31 @@
     <div class="cbox"><div class="chartbox" style="height:300px"><canvas id="yrVolChart"></canvas></div></div>
 
     <div class="cbox tldr"><p style="margin:0"><strong>Takeaway.</strong> Even the biggest names trade only a handful of PSA 9 NPRs a year — Kobe is the most liquid (23 sales since 2019), Jordan the most valuable (2026 median ~$8,100 on just 2 sales). Duncan, Iverson, Garnett and Shaq barely trade (3–6 PSA 9 sales each in eight years), so their prices are set by one or two transactions. Volume for the group clusters in 2025–26, consistent with the broader market heating up.</p></div>
+  </div>
+
+  <div id="paneSET" class="pane cmp">
+    <h2>Whole NPR set — PSA 8 / 9 / 10 sales by year</h2>
+    <p class="csub">Every graded NPR sale across the entire set, 2019–2026. Based on <strong>179 cards with any PSA 8/9/10 population</strong>; <strong>121</strong> of them recorded at least one sale (<strong>400 sales total</strong>). PSA Auction Prices, Oct 2026.</p>
+    <div class="cbox"><table id="setAggTable"><thead><tr><th>Year</th><th>PSA 8 (n · med)</th><th>PSA 9 (n · med)</th><th>PSA 10 (n · med)</th><th>Total sales</th></tr></thead><tbody id="setaggtb"></tbody></table></div>
+    <p class="cnote">Medians pool every card that sold that year, so they swing with <em>which</em> cards traded (a Jordan vs. a common) — read them as rough central tendency, not a single card's price. The sales <strong>count</strong> is the clean signal.</p>
+
+    <h2>Sales volume by year (stacked by grade)</h2>
+    <div class="cbox"><div class="chartbox" style="height:300px"><canvas id="setVolChart"></canvas></div></div>
+    <p class="cnote">2021 COVID-bubble bump → 2022–23 collapse → a large 2024–26 ramp. 2025–26 are the peak volume years by far.</p>
+
+    <h2>Median price by year, by grade</h2>
+    <p class="csub">Pooled across all cards that sold (log scale). Note the PSA 8 line <em>falling</em> into 2025–26 even as its volume explodes.</p>
+    <div class="cbox"><div class="chartbox" style="height:300px"><canvas id="setMedChart"></canvas></div></div>
+
+    <h2>Every player with an 8/9/10 sale since 2019</h2>
+    <p class="csub">Yearly totals (all three grades combined) plus the grade split. Click a header to sort — default is most-traded first.</p>
+    <div class="scroll"><table id="setPlayTable"><thead><tr>
+      <th data-sk="num" class="sortable">#</th><th data-sk="player" class="sortable">Player</th>
+      <th data-sk="y0" class="sortable">'19</th><th data-sk="y1" class="sortable">'20</th><th data-sk="y2" class="sortable">'21</th><th data-sk="y3" class="sortable">'22</th><th data-sk="y4" class="sortable">'23</th><th data-sk="y5" class="sortable">'24</th><th data-sk="y6" class="sortable">'25</th><th data-sk="y7" class="sortable">'26</th>
+      <th data-sk="p8" class="sortable gdiv">P8</th><th data-sk="p9" class="sortable">P9</th><th data-sk="p10" class="sortable">P10</th><th data-sk="tot" class="sortable">Total</th>
+    </tr></thead><tbody id="setplaytb"></tbody></table></div>
+
+    <div class="cbox tldr"><p style="margin:0"><strong>Takeaway.</strong> The whole set has traded just <strong>400 graded 8/9/10 NPRs in eight years</strong> — it's a genuinely illiquid parallel. Volume went <strong>19 → 38 (2021 bubble) → 9 (2022 bust) → 121 (2026)</strong>, a ~6× surge off the lows. But the 2025–26 explosion is mostly <strong>low-end PSA 8 commons</strong>: PSA 8 count jumped to 49 in 2026 while its median <em>fell</em> to ~$25 — supply flooding in at the bottom. The money is still concentrated in a handful of names: <strong>Vince (38), Kobe (36), Dirk (25), Pierce (24), Jason Williams (19), Jordan (16)</strong> account for ~1/3 of all set sales.</p></div>
   </div>
 
 </div>
@@ -639,6 +670,38 @@ function buildYear(){
     data:{labels:yrs,datasets:P.map(p=>({label:p.k,data:p.n,backgroundColor:p.c}))},
     options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true,title:{display:true,text:"# PSA 9 sales"}}},plugins:{legend:{position:"bottom",labels:{boxWidth:12,font:{size:11}}}}}});
 }
+let setBuilt=false, setSort={k:"tot",dir:-1};
+function buildSet(){
+  if(setBuilt||typeof Chart==="undefined") return; setBuilt=true;
+  const yrs=["2019","2020","2021","2022","2023","2024","2025","2026"];
+  const AGGC={8:[2,2,3,3,4,11,23,49],9:[8,17,21,6,10,34,76,53],10:[9,11,14,0,2,7,16,19]};
+  const AGGM={8:[24,54,11,99,219,143,35,25],9:[65,65,613,150,57,102,75,166],10:[14,121,1525,null,153,355,394,280]};
+  const m0=v=>v==null?"—":"$"+Number(v).toLocaleString(undefined,{maximumFractionDigits:0});
+  const SETPLAY=[[230,"Vince Carter",[5,6,8,1,1,5,8,4],3,19,16,38],[175,"Kobe Bryant",[1,3,4,0,3,4,11,10],8,23,5,36],[234,"Dirk Nowitzki",[3,2,5,1,1,3,5,5],8,12,5,25],[235,"Paul Pierce",[2,3,5,2,1,1,7,3],3,18,3,24],[232,"Jason Williams",[0,1,2,0,0,7,5,4],1,14,4,19],[81,"Michael Jordan",[1,0,4,0,1,3,3,4],5,11,0,16],[134,"Dennis Rodman",[0,1,0,3,1,1,5,3],3,8,3,14],[229,"Antawn Jamison",[0,2,1,1,0,0,0,5],3,4,2,9],[40,"Shaquille O'Neal",[1,1,0,0,0,4,2,0],1,6,1,8],[190,"Tim Duncan",[1,0,0,0,0,0,1,6],1,6,1,8],[14,"Kevin Garnett",[0,2,0,0,0,1,1,3],1,5,1,7],[42,"Allen Iverson",[0,1,0,0,0,1,0,5],4,3,0,7],[123,"Charles Barkley",[0,0,0,0,2,1,2,1],0,5,1,6],[45,"Steve Kerr",[2,2,0,0,0,0,0,1],1,0,4,5],[165,"Grant Hill",[0,0,0,0,1,1,3,0],0,3,2,5],[213,"Rony Seikaly",[0,0,0,0,0,0,1,4],4,1,0,5],[227,"Mike Bibby",[0,2,1,0,0,2,0,0],1,3,1,5],[8,"Ray Allen",[0,0,0,0,0,0,1,3],0,4,0,4],[56,"Reggie Miller",[0,0,0,0,0,2,1,1],0,4,0,4],[89,"Gary Payton",[0,2,0,1,0,0,0,1],2,2,0,4],[126,"Alonzo Mourning",[0,0,0,0,1,2,1,0],0,4,0,4],[214,"Ervin Johnson",[0,0,0,0,0,0,1,3],2,1,1,4],[33,"John Stockton",[0,0,1,0,0,1,1,0],1,2,0,3],[143,"John Starks",[0,0,0,0,0,0,2,1],0,3,0,3],[161,"Rodrick Rhodes",[0,0,0,0,0,0,0,3],2,1,0,3],[170,"Anfernee Hardaway",[0,1,0,0,0,1,1,0],0,2,1,3],[180,"Stephon Marbury",[0,0,0,0,0,1,0,2],0,2,1,3],[181,"Brent Price",[0,0,0,0,0,0,2,1],2,1,0,3],[206,"Hubert Davis",[0,0,3,0,0,0,0,0],0,0,3,3],[210,"Karl Malone",[0,0,0,0,0,1,0,2],0,2,1,3],[220,"Chris Webber",[2,0,0,0,0,0,1,0],1,0,2,3],[231,"Robert Traylor",[0,0,0,0,0,1,1,1],0,3,0,3],[3,"Sam Mitchell",[0,0,0,0,0,0,2,0],0,2,0,2],[17,"Keith Van Horn",[0,0,0,0,0,1,1,0],2,0,0,2],[25,"Antonio Davis",[0,0,0,0,0,0,1,1],1,1,0,2],[68,"Toni Kukoc",[0,0,0,0,0,1,1,0],0,2,0,2],[83,"David Robinson",[0,0,0,0,1,0,1,0],0,1,1,2],[116,"Tracy Murray",[0,0,0,0,0,0,1,1],0,2,0,2],[135,"Patrick Ewing",[0,0,0,0,0,0,2,0],1,0,1,2],[138,"Joe Smith",[0,0,0,0,0,0,0,2],1,1,0,2],[158,"Maurice Taylor",[0,0,0,0,0,0,0,2],2,0,0,2],[162,"Muggsy Bogues",[0,1,0,0,0,0,1,0],1,0,1,2],[163,"Kenny Anderson",[0,0,0,0,0,0,1,1],1,1,0,2],[172,"P.J. Brown",[0,0,0,0,0,0,0,2],1,0,1,2],[174,"Olden Polynice",[0,0,0,0,0,0,1,1],0,1,1,2],[185,"Glenn Robinson",[0,0,0,0,0,0,1,1],1,1,0,2],[189,"Aaron Williams",[1,0,0,0,0,0,0,1],0,0,2,2],[191,"Chauncey Billups",[0,0,1,0,0,1,0,0],0,2,0,2],[192,"Jim McIlvaine",[0,0,0,0,0,0,2,0],1,1,0,2],[193,"Chris Mullin",[0,0,0,0,0,0,2,0],2,0,0,2],[194,"George Lynch",[0,0,0,0,0,1,0,1],1,0,1,2],[200,"Jayson Williams",[0,0,0,0,0,0,1,1],1,1,0,2],[205,"Brent Barry",[0,0,0,0,0,1,0,1],1,1,0,2],[211,"Chuck Person",[0,0,0,0,0,0,1,1],0,0,2,2],[218,"Steve Nash",[0,0,0,0,0,1,1,0],1,1,0,2],[239,"Michael Dickerson",[0,0,0,0,0,0,0,2],2,0,0,2],[2,"Matt Maloney",[0,0,0,0,0,0,1,0],0,1,0,1],[5,"Bryant Reeves",[0,0,0,0,0,1,0,0],0,0,1,1],[12,"Hakeem Olajuwon",[0,0,0,0,0,0,1,0],0,1,0,1],[13,"Gary Trent",[0,0,0,0,0,0,0,1],1,0,0,1],[15,"Dikembe Mutombo",[0,0,0,0,0,0,1,0],0,0,1,1],[19,"Tim Hardaway",[0,0,0,0,0,0,1,0],0,1,0,1],[28,"Tracy McGrady",[0,0,0,0,1,0,0,0],0,1,0,1],[30,"Ron Harper",[0,0,0,0,0,0,1,0],0,1,0,1],[37,"Rod Strickland",[0,0,0,0,0,0,1,0],1,0,0,1],[44,"Cedric Henderson",[0,0,0,0,0,0,1,0],0,0,1,1],[48,"Shandon Anderson",[0,0,0,0,0,0,1,0],0,1,0,1],[49,"Shareef Abdur-Rahim",[0,0,0,0,0,0,1,0],0,1,0,1],[54,"Greg Anthony",[0,0,0,0,0,0,0,1],1,0,0,1],[55,"Jeff Hornacek",[0,0,0,0,0,0,1,0],1,0,0,1],[62,"Terrell Brandon",[0,0,0,0,0,0,1,0],0,1,0,1],[64,"Jim Jackson",[0,0,0,0,0,0,0,1],0,0,1,1],[67,"Khalid Reeves",[0,0,0,0,0,0,0,1],0,1,0,1],[71,"Jalen Rose",[0,0,0,0,0,0,1,0],0,1,0,1],[73,"Anthony Mason",[0,0,0,0,0,0,1,0],0,1,0,1],[74,"Lamond Murray",[0,0,0,0,0,0,1,0],0,1,0,1],[77,"Brian Shaw",[0,0,0,0,0,0,0,1],0,1,0,1],[91,"Voshon Lenard",[0,0,0,0,0,0,0,1],0,0,1,1],[94,"Sam Cassell",[0,0,0,0,0,0,1,0],0,0,1,1],[95,"Jerry Stackhouse",[0,0,0,0,0,0,1,0],1,0,0,1],[96,"Billy Owens",[0,0,0,0,0,0,0,1],1,0,0,1],[97,"Matt Geiger",[0,0,0,0,0,0,0,1],0,1,0,1],[99,"Bobby Jackson",[0,0,0,0,0,1,0,0],0,1,0,1],[106,"Adonal Foyle",[0,0,0,0,0,0,0,1],1,0,0,1],[107,"Isaac Austin",[0,0,0,0,0,0,0,1],1,0,0,1],[109,"Darrell Armstrong",[0,0,0,0,0,0,0,1],0,1,0,1],[111,"Stacey Augmon",[0,0,0,0,0,0,0,1],1,0,0,1],[115,"Lee Mayberry",[0,0,0,0,0,0,1,0],0,1,0,1],[117,"Scottie Pippen",[0,0,0,0,0,0,1,0],0,1,0,1],[129,"Dell Curry",[0,0,0,0,0,0,1,0],0,1,0,1],[130,"Jamal Mashburn",[0,0,0,0,0,0,1,0],0,0,1,1],[131,"Eric Piatkowski",[0,0,0,0,0,0,0,1],0,1,0,1],[133,"Pete Chilcutt",[0,0,0,0,0,0,0,1],1,0,0,1],[136,"Danny Schayes",[0,0,0,0,0,1,0,0],0,1,0,1],[145,"Mark Jackson",[0,0,0,0,0,0,1,0],0,1,0,1],[146,"Dana Barros",[0,0,1,0,0,0,0,0],0,0,1,1],[147,"Eric Williams",[0,0,0,0,0,0,0,1],1,0,0,1],[153,"Dee Brown",[0,0,0,0,0,0,1,0],0,1,0,1],[154,"Brian Grant",[0,0,0,0,0,0,0,1],1,0,0,1],[176,"Sean Elliott",[0,0,0,0,0,0,1,0],0,1,0,1],[177,"Latrell Sprewell",[0,0,0,0,1,0,0,0],0,1,0,1],[179,"Darrell Armstrong",[0,0,0,0,0,0,0,1],0,1,0,1],[184,"Anthony Parker",[0,0,0,0,0,0,1,0],1,0,0,1],[196,"Bryon Russell",[0,0,0,0,0,0,0,1],1,0,0,1],[199,"Alan Henderson",[0,0,0,0,0,0,0,1],1,0,0,1],[201,"Ben Wallace",[0,0,0,0,0,0,1,0],0,1,0,1],[204,"Cherokee Parks",[0,0,0,0,0,0,0,1],1,0,0,1],[208,"Loy Vaught",[0,0,0,0,0,0,1,0],0,1,0,1],[209,"Adam Keefe",[0,0,0,0,0,0,0,1],1,0,0,1],[212,"Chris Childs",[0,0,0,0,0,0,0,1],0,1,0,1],[216,"Jerome Williams",[0,0,0,0,0,0,1,0],0,1,0,1],[222,"Antonio Daniels",[0,0,0,0,0,0,0,1],1,0,0,1],[223,"Mitch Richmond",[0,0,0,0,0,0,1,0],0,0,1,1],[225,"Charles Oakley",[0,0,0,0,0,0,0,1],0,1,0,1],[228,"Raef Lafrentz",[0,0,0,0,0,0,0,1],1,0,0,1],[233,"Larry Hughes",[0,0,0,0,0,0,1,0],0,1,0,1],[236,"Bonzi Wells",[0,0,1,0,0,0,0,0],0,0,1,1],[237,"Michael Doleac",[0,0,1,0,0,0,0,0],0,1,0,1],[240,"Matt Harpring",[0,0,0,0,0,0,0,1],0,1,0,1],[244,"Ricky Davis",[0,0,0,0,0,0,0,1],0,1,0,1],[246,"Tyronn Lue",[0,0,0,0,1,0,0,0],1,0,0,1]];
+  // aggregate table
+  const atb=document.getElementById("setaggtb");
+  for(let i=0;i<8;i++){const tot=AGGC[8][i]+AGGC[9][i]+AGGC[10][i];const tr=document.createElement("tr");
+    tr.innerHTML=`<td style="text-align:left;font-weight:600">${yrs[i]}</td><td>${AGGC[8][i]} · ${m0(AGGM[8][i])}</td><td>${AGGC[9][i]} · ${m0(AGGM[9][i])}</td><td>${AGGC[10][i]} · ${m0(AGGM[10][i])}</td><td><strong>${tot}</strong></td>`;atb.appendChild(tr);}
+  // volume stacked bar
+  new Chart(document.getElementById("setVolChart"),{type:"bar",
+    data:{labels:yrs,datasets:[{label:"PSA 8",data:AGGC[8],backgroundColor:"#9fb4d6"},{label:"PSA 9",data:AGGC[9],backgroundColor:"#c0392b"},{label:"PSA 10",data:AGGC[10],backgroundColor:"#b8860b"}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true,title:{display:true,text:"# sales"}}},plugins:{legend:{position:"bottom"}}}});
+  // median lines
+  new Chart(document.getElementById("setMedChart"),{type:"line",
+    data:{labels:yrs,datasets:[{label:"PSA 8",data:AGGM[8],borderColor:"#5a78b0",backgroundColor:"#5a78b0",borderWidth:2.5,tension:.2,spanGaps:true,pointRadius:3},{label:"PSA 9",data:AGGM[9],borderColor:"#c0392b",backgroundColor:"#c0392b",borderWidth:2.5,tension:.2,spanGaps:true,pointRadius:3},{label:"PSA 10",data:AGGM[10],borderColor:"#b8860b",backgroundColor:"#b8860b",borderWidth:2.5,tension:.2,spanGaps:true,pointRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{type:"logarithmic",ticks:{callback:v=>"$"+Number(v).toLocaleString()}}},plugins:{legend:{position:"bottom"}}}});
+  // player table
+  function renderSetPlayers(){
+    const tb=document.getElementById("setplaytb"); const k=setSort.k,dir=setSort.dir;
+    const keyf=r=>{if(k==="num")return r[0];if(k==="player")return r[1];if(k==="p8")return r[3];if(k==="p9")return r[4];if(k==="p10")return r[5];if(k==="tot")return r[6];if(k&&k[0]==="y")return r[2][+k.slice(1)];return r[6];};
+    const rows=[...SETPLAY].sort((a,b)=>{const x=keyf(a),y=keyf(b);if(typeof x==="string")return x.localeCompare(y)*dir;return (x-y)*dir;});
+    tb.innerHTML="";
+    rows.forEach(r=>{const tr=document.createElement("tr");const yc=r[2].map(v=>`<td class="sc">${v||''}</td>`).join("");
+      tr.innerHTML=`<td class="cnum">${r[0]}</td><td style="text-align:left">${r[1]}</td>${yc}<td class="sc gdiv">${r[3]||''}</td><td class="sc">${r[4]||''}</td><td class="sc">${r[5]||''}</td><td class="sc"><strong>${r[6]}</strong></td>`;tb.appendChild(tr);});
+  }
+  document.querySelectorAll("#setPlayTable th.sortable").forEach(th=>{th.addEventListener("click",()=>{const k=th.dataset.sk;if(setSort.k===k)setSort.dir*=-1;else setSort={k,dir:(k==="player"?1:-1)};renderSetPlayers();});});
+  renderSetPlayers();
+}
 document.querySelectorAll('.tabbtn').forEach(btn=>{ btn.addEventListener('click',()=>{
   document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
@@ -647,6 +710,7 @@ document.querySelectorAll('.tabbtn').forEach(btn=>{ btn.addEventListener('click'
   if(btn.dataset.pane==='paneBARO'){ buildBaro(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
   if(btn.dataset.pane==='paneKOBE'){ buildKobe(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
   if(btn.dataset.pane==='paneYR'){ buildYear(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
+  if(btn.dataset.pane==='paneSET'){ buildSet(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
 }); });
 </script>
 </body>
