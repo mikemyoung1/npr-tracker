@@ -25,10 +25,10 @@
   .flag{ display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; white-space:nowrap; }
   .f-graded{ background:#e8f6ee; color:var(--green); } .f-thin{ background:#fff4e0; color:var(--amber); } .f-none{ background:#fbe9f2; color:var(--red); }
   .chip{ display:inline-block; width:16px; height:16px; border-radius:50%; background:var(--yellow); vertical-align:middle; }
-  .scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--card); box-shadow:0 1px 2px rgba(20,34,59,.04); }
+  .scroll{ overflow:visible; }
   table{ border-collapse:collapse; width:100%; font-size:12px; min-width:1260px; }
   th,td{ padding:7px 8px; border-bottom:1px solid var(--line); text-align:left; vertical-align:middle; }
-  thead th{ background:var(--navy); color:#fff; font-weight:600; font-size:10.5px; text-transform:uppercase; letter-spacing:.02em; position:sticky; top:0; }
+  thead th{ background:var(--navy); color:#fff; font-weight:600; font-size:10.5px; text-transform:uppercase; letter-spacing:.02em; position:sticky; top:0; z-index:5; }
   .sec td{ background:#eef1f7; font-weight:700; color:var(--navy); font-size:12px; text-transform:uppercase; letter-spacing:.03em; }
   tbody tr:hover:not(.sec){ background:#f5f8fd; }
   tr.done{ background:#eaf7ee; }
@@ -52,6 +52,8 @@
 #chkTable th.sortable{ cursor:pointer; white-space:nowrap; }
 #chkTable th.sortable:hover{ color:var(--navy); }
 #chkTable th.popgrp{ background:#15294a; text-align:center; font-size:9.5px; }
+#chkTable thead tr:first-child th{ position:static; top:auto; z-index:auto; }
+#chkTable th.gsales, #chkTable td.gsales{ border-left:2px solid #c3ccda; border-right:2px solid #c3ccda; }
 #chkTable tr.own{ background:#bfe8cc; }
 #chkTable tr.own td{ color:#13331f; }
 #chkTable tr.own td.cp{ font-weight:700; color:#145c2e; }
@@ -185,7 +187,7 @@
           <th data-k="grade" class="sortable">Grade</th>
           <th data-k="paid" class="sortable">Paid</th>
           <th data-k="date" class="sortable">Date</th>
-          <th data-k="sales" class="sortable pop">Graded sales</th>
+          <th data-k="sales" class="sortable pop gsales">Graded sales</th>
           <th data-k="p9" class="sortable pop">PSA 9</th>
           <th data-k="p10" class="sortable pop">PSA 10</th>
         </tr></thead>
@@ -560,7 +562,7 @@ function renderChecklist(){
       `<td class="cnum">${r.num}</td><td class="cp">${r.player}${tags}${link}</td>`+
       `<td>${r.owned?'<span class="ownchk">✓</span>':'<span class="dash">—</span>'}</td>`+
       `<td class="cg">${grd}</td><td class="cpaid">${paid}</td><td class="cpaid">${dt}</td>`+
-      `<td class="pop">${salesCell}</td><td class="pop">${r.p9}</td><td class="pop p10">${r.p10}</td>`;
+      `<td class="pop gsales">${salesCell}</td><td class="pop">${r.p9}</td><td class="pop p10">${r.p10}</td>`;
     const cb=tr.querySelector(".wchk");
     if(cb && !r.owned) cb.addEventListener("change",e=>{ if(e.target.checked) chkWant[r.num]=true; else delete chkWant[r.num]; chkSave(); renderChecklist(); });
     body.appendChild(tr);
