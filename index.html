@@ -53,6 +53,9 @@
 #chkTable th.sortable:hover{ color:var(--navy); }
 #chkTable th.popgrp{ background:#15294a; text-align:center; font-size:9.5px; }
 .bGRD{ display:inline-block; background:#7a4a12; color:#ffd9a8; font-size:9px; font-weight:700; padding:1px 5px; border-radius:7px; white-space:nowrap; }
+.chkSearch{ font-size:13px; padding:6px 10px; border:1px solid #c7ccd4; border-radius:7px; min-width:200px; outline:none; }
+.chkSearch:focus{ border-color:#2d6cdf; box-shadow:0 0 0 2px rgba(45,108,223,.15); }
+#chkTable tr.nomatch{ display:none; }
 #chkTable thead tr:first-child th{ position:static; top:auto; z-index:auto; }
 #chkTable th.gsales, #chkTable td.gsales{ border-left:2px solid #c3ccda; border-right:2px solid #c3ccda; }
 #chkTable tr.own{ background:#bfe8cc; }
@@ -171,8 +174,9 @@
 
   <div class="chk">
     <h2 style="margin:22px 0 2px">Full set checklist — every 1998 Finest NPR card</h2>
-    <p class="csub" style="margin:0 0 10px"><span class="owndot"></span> dark green = owned · <span class="wantdot"></span> light green = wanted (tick the Wanted box). <span class="bAS">AS</span> = made an All-Star game, <span class="bHOF">HOF</span> = Hall of Famer. <strong>Graded sales</strong> = total PSA-graded sales on record (PSA ↗ links the card where sales exist). <strong>PSA 9 / PSA 10</strong> columns are current <strong>PSA Population Report</strong> counts (PSA-labeled NPR — see the ⚠ note at the top of the page; verified double-refractor NPRs are rarer). Click a column header to sort.</p>
+    <p class="csub" style="margin:0 0 10px"><span class="owndot"></span> dark green = owned · <span class="wantdot"></span> light green = wanted (tick the Wanted box). <span class="bAS">AS</span> = made an All-Star game, <span class="bHOF">HOF</span> = Hall of Famer. <strong>Graded sales</strong> = total PSA-graded sales on record (every card links via PSA ↗ to its pop report). <strong>PSA 10 / 9 / 8 / 7↓</strong> columns are current <strong>PSA Population Report</strong> counts (PSA-labeled NPR — see the ⚠ note at the top of the page; verified double-refractor NPRs are rarer). Click a column header to sort, or use the search box to filter by player or card number.</p>
     <div class="chkbar">
+      <input type="search" id="chkSearch" class="chkSearch" placeholder="Search player or card #…" autocomplete="off">
       <span id="chkSummary" class="chkSum"></span>
       <label class="chkToggle"><input type="checkbox" id="ownOnly"> Show owned only</label>
     </div>
@@ -481,6 +485,7 @@ Object.keys(OWNED).forEach(spec=>{ if(!(spec in state)) state[spec]=true; });
 function save(){ try{ localStorage.setItem("nprHofWant",JSON.stringify(state)); localStorage.setItem("nprHofMaybe",JSON.stringify(maybeState)); }catch(e){} }
 const DRAFTGRP="1998 Draft — Top 10 Picks";
 const ROOKIE=new Set(["304767","304797","304791"]); // HOF rookies shown only in the draft section
+const GRADINGSPEC=new Set(["2019553","2020860","2019558","5209664","2020593","304735"]); // specs of cards currently at PSA for grading
 function buildRow(r,body){
   const [grp,p,spec,num,flag,pick]=r;
   const owned=OWNED[spec];
@@ -490,7 +495,7 @@ function buildRow(r,body){
   const url="https://www.psacard.com/spec/psa/"+spec;
   tr.innerHTML=`<td><input type="checkbox" ${checked?"checked":""}></td>`+
     `<td>${checked?'':'<button class="mb '+(maybe?'on':'')+'" title="Considering">?</button>'}</td>`+
-    `<td class="pl">${pick?'<span class="pick">#'+pick+'</span>':''}<b>${p}</b> ${num?'<span class="num">'+num+'</span>':''}${owned?'<span class="own">OWNED</span>':''}<br><a href="${url}" target="_blank" rel="noopener">PSA ↗</a></td>`+
+    `<td class="pl">${pick?'<span class="pick">#'+pick+'</span>':''}<b>${p}</b> ${num?'<span class="num">'+num+'</span>':''}${owned?'<span class="own">OWNED</span>':''}${GRADINGSPEC.has(spec)?' <span class="bGRD">⏳ at grading</span>':''}<br><a href="${url}" target="_blank" rel="noopener">PSA ↗</a></td>`+
     `<td class="grade">${owned?owned.g:'<span class="dash">—</span>'}</td>`+
     `<td class="paid">${owned?money(owned.paid)+(owned.d?'<br><span class="pdate">'+fmtD(owned.d)+'</span>':''):'<span class="dash">—</span>'}</td>`+
     `<td><span class="flag ${FL[flag][0]}">${FL[flag][1]}</span></td>`+
@@ -550,6 +555,8 @@ function renderChecklist(){
   const ownedOnly=document.getElementById("ownOnly").checked;
   let rows=CHECKLIST.map(c=>{const o=OWNEDNUM[c[0]]||null;const sc=(c[0] in SALESCNT)?SALESCNT[c[0]]:-1;return {num:c[0],player:c[1],p10:c[2],p9:c[3],p8:c[4],p7:c[5],owned:o?1:0,grade:o?o[0]:"",paid:o?o[1]:null,date:o?o[2]:"",sales:sc,wanted:isWanted(c[0])?1:0};});
   if(ownedOnly) rows=rows.filter(r=>r.owned);
+  const sb=document.getElementById("chkSearch"); const q=(sb?sb.value:"").trim().toLowerCase();
+  if(q) rows=rows.filter(r=>r.player.toLowerCase().includes(q) || String(r.num)===q || String(r.num).includes(q) || (r.grade&&r.grade.toLowerCase().includes(q)));
   const k=chkSort.k,dir=chkSort.dir;
   rows.sort((a,b)=>{let x=a[k],y=b[k]; if(k==="paid"){x=x==null?-1:x;y=y==null?-1:y;} if(typeof x==="string"){return x.localeCompare(y)*dir;} return (x-y)*dir;});
   body.innerHTML="";
@@ -577,13 +584,16 @@ function renderChecklist(){
   const nOwned=Object.keys(OWNEDNUM).length;
   const nWanted=CHECKLIST.filter(c=>isWanted(c[0])).length;
   const inv=Object.values(OWNEDNUM).reduce((a,o)=>a+o[1],0);
-  document.getElementById("chkSummary").innerHTML="<strong>"+nOwned+"</strong> of <strong>"+nWanted+"</strong> wanted owned · "+money(inv)+" invested · "+CHECKLIST.length+" NPR cards in set";
+  const sbq=document.getElementById("chkSearch"); const qv=(sbq?sbq.value:"").trim();
+  const matchNote=qv?" · <strong>"+rows.length+"</strong> match"+(rows.length===1?"":"es")+' for "'+qv.replace(/</g,"&lt;")+'"':"";
+  document.getElementById("chkSummary").innerHTML="<strong>"+nOwned+"</strong> of <strong>"+nWanted+"</strong> wanted owned · "+money(inv)+" invested · "+CHECKLIST.length+" NPR cards in set"+matchNote;
 }
 document.querySelectorAll("#chkTable th.sortable").forEach(th=>{ th.addEventListener("click",()=>{
   const k=th.dataset.k; if(chkSort.k===k) chkSort.dir*=-1; else chkSort={k,dir:(k==="player"?1:-1)};
   renderChecklist();
 }); });
 document.getElementById("ownOnly").addEventListener("change",renderChecklist);
+document.getElementById("chkSearch").addEventListener("input",renderChecklist);
 renderChecklist();
 
 // ---- Refractor Comparison tab (lazy-built when first opened) ----
