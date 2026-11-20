@@ -63,6 +63,7 @@
 #grTable{ width:100%; border-collapse:collapse; }
 #grTable th,#grTable td{ padding:6px 10px; border-bottom:1px solid #e5e8ee; font-size:13px; text-align:center; }
 #grTable td:first-child{ text-align:left; font-weight:600; }
+td.rownum{ text-align:center; color:var(--muted); font-size:12px; font-variant-numeric:tabular-nums; }
 #chkTable thead tr:first-child th{ position:static; top:auto; z-index:auto; }
 #chkTable th.gsales, #chkTable td.gsales{ border-left:2px solid #c3ccda; border-right:2px solid #c3ccda; }
 #chkTable tr.own{ background:#bfe8cc; }
@@ -148,7 +149,6 @@
   <div class="prog">
     <div class="pct"><span id="cnt">0</span>/<span id="tot">0</span> owned</div>
     <div class="bar"><span id="fill"></span></div>
-    <div class="mb-ct"><span id="mbc">0</span> considering</div>
     <div class="inv"><span id="inv">$0</span> in <span id="ownc">0</span> cards</div>
     <button class="reset" id="reset">Reset checks</button>
   </div>
@@ -162,13 +162,13 @@
     <span class="flag f-graded">Active graded</span> ·
     <span class="flag f-thin">Thin graded</span> ·
     <span class="flag f-none">No graded in 3 yrs</span> &nbsp;|&nbsp;
-    <span class="chip"></span> yellow = considering · green = owned
+    green = owned
   </p>
 
   <div class="scroll">
     <table>
       <thead><tr>
-        <th>✓</th><th>?</th><th>Player</th><th>Grade</th><th>Paid</th><th>Flag</th>
+        <th>#</th><th>✓</th><th>Player</th><th>Grade</th><th>Paid</th><th>Flag</th>
         <th>Sale 1 (newest)</th><th>Sale 2</th><th>Sale 3</th><th>Sale 4</th><th>Sale 5</th>
         <th class="pop">Total</th><th class="pop">PSA 10</th><th class="pop">PSA 9</th><th class="pop">PSA 8</th><th class="pop">PSA 7</th>
       </tr></thead>
@@ -395,6 +395,18 @@ const META=[
  ["Heavily collected (non-HOF)","Muggsy Bogues","2020596","",T],
  ["Heavily collected (non-HOF)","Shawn Kemp","5209545","",N],
  ["Heavily collected (non-HOF)","Rasheed Wallace","304712","#188",N],
+ ["Heavily collected (non-HOF)","Eddie Jones","304633","#7",T],
+ ["Heavily collected (non-HOF)","Antoine Walker","304657","#53",T],
+ ["Heavily collected (non-HOF)","Vin Baker","2020602","#140",T],
+ ["Heavily collected (non-HOF)","Steve Smith","2020613","#150",N],
+ ["Heavily collected (non-HOF)","Rik Smits","2020582","#178",T],
+ ["Heavily collected (non-HOF)","Glen Rice","14278370","#217",N],
+ ["Heavily collected (non-HOF)","Nick Van Exel","np219","#219",N],
+ ["Heavily collected (non-HOF)","Shareef Abdur-Rahim","5209859","#49",T],
+ ["Heavily collected (non-HOF)","Sam Cassell","2020612","#94",T],
+ ["Heavily collected (non-HOF)","Michael Finley","10052293","#169",N],
+ ["Heavily collected (non-HOF)","Isaiah Rider","np11","#11",N],
+ ["Heavily collected (non-HOF)","Allan Houston","np31","#31",N],
  ["1998 Draft — Top 10 Picks","Michael Olowokandi","304743","#226",T,1],
  ["1998 Draft — Top 10 Picks","Mike Bibby","304749","#227",T,2],
  ["1998 Draft — Top 10 Picks","Raef LaFrentz","304755","#228",T,3],
@@ -408,6 +420,8 @@ const META=[
 ];
 // spec -> last 5 graded sales [grade,price,"YYYY-MM-DD"]
 const SALES5={
+"2020612":[[10,432,"2025-12-15","Fanatics","Auc"]],
+"5209859":[[9,35,"2025-12-17","eBay","BIN"]],
 "304664":[[7,5495,"2026-09-30","eBay","BIN"],[9,8400,"2026-09-21","Fanatics","Auc"],[8,5400,"2026-08-24","Fanatics","Auc"],[9,7799,"2026-07-31","eBay","BIN"],[8,4150,"2026-06-16","eBay","Offer"]],
 "304696":[[10,210,"2025-10-13","Fanatics","Auc"],[9,23.38,"2025-03-02","eBay","Auc"],[9,22.5,"2025-02-03","eBay","Auc"],[9,42,"2024-05-16","eBay","Auc"],[10,152.5,"2023-02-22","eBay","Auc"]],
 "2020586":[[10,103.5,"2025-03-24","eBay","Auc"]],
@@ -460,6 +474,7 @@ const SALES5={
 // spec -> [total, PSA10, PSA9, PSA8, PSA7]
 const POPS={
 "304712":[1,0,1,0,0],
+"304633":[3,1,2,0,0],"304657":[3,0,1,2,0],"2020602":[2,1,0,1,0],"2020613":[1,1,0,0,0],"2020582":[2,1,1,0,0],"14278370":[1,0,0,1,0],"5209859":[2,0,2,0,0],"2020612":[1,1,0,0,0],"10052293":[2,0,0,0,2],
 "304664":[73,3,38,21,6],"304696":[17,6,10,1,0],"2020586":[6,5,0,0,1],"5210023":[9,1,5,2,1],"2020860":[3,1,2,0,0],
 "304705":[81,10,49,18,3],"304637":[20,5,12,3,0],"304648":[20,1,14,4,0],"304729":[11,2,8,0,1],"2019558":[7,0,3,4,0],
 "1876704":[8,4,4,0,0],"2020838":[6,2,3,1,0],"2020594":[3,1,0,1,1],"304721":[35,1,22,10,2],"304654":[22,0,12,9,1],
@@ -474,7 +489,7 @@ const POPS={
 const OWNED={
  "304791":{g:"PSA 9",paid:840,d:"2026-10-18"},
  "304767":{g:"PSA 9",paid:190,d:"2020-10-21"},"304797":{g:"PSA 9",paid:300,d:"2026-10-01"},"304761":{g:"PSA 9",paid:46,d:"2026-10-14"},
- "304729":{g:"PSA 9",paid:95,d:"2026-10-14"},"304785":{g:"PSA 9",paid:45,d:"2026-11-14"},"5209985":{g:"PSA 8",paid:68.39,d:"2026-11-18"},"304743":{g:"Ungraded",paid:14.41,d:"2026-11-17"},"2019558":{g:"Ungraded",paid:46,d:"2026-10-15"},
+ "304729":{g:"PSA 9",paid:95,d:"2026-10-14"},"304785":{g:"PSA 9",paid:45,d:"2026-11-14"},"5209985":{g:"PSA 8",paid:68.39,d:"2026-11-18"},"304743":{g:"Ungraded",paid:14.41,d:"2026-11-17"},"2020582":{g:"PSA 10",paid:299.95,d:"2026-11-20"},"2020602":{g:"PSA 10",paid:269.96,d:"2026-11-20"},"2019558":{g:"Ungraded",paid:46,d:"2026-10-15"},
  "304735":{g:"Ungraded",paid:35,d:"2026-10-15"},"2019553":{g:"Ungraded",paid:92,d:"2026-10-15"},"2019917":{g:"Ungraded",paid:90,d:"2026-10-15"},
  "5209941":{g:"Ungraded",paid:49.95,d:"2026-10-16"},
  "304710":{g:"Ungraded",paid:40.57,d:"2026-10-19"},"2020860":{g:"Ungraded",paid:28.81,d:"2026-10-19"},"2020635":{g:"PSA 8",paid:41.29,d:"2026-11-11"},"304727":{g:"PSA 4",paid:29.51,d:"2026-11-09"},
@@ -493,7 +508,20 @@ const NPRSPEC={1:"2020856",2:"2020858",3:"11408486",4:"2020857",5:"2019912",7:"3
 // Owned by card number: cardNo -> [grade, paid, date]
 const SPECNUM={8:"5209820",12:"2019553",14:"304637",15:"2020586",19:"2020860",28:"2020851",33:"2019552",40:"304648",42:"304654",51:"2020838",56:"5210023",68:"5209985",76:"14278336",81:"304664",83:"1876704",88:"5209545",89:"2019558",102:"2020635",117:"304679",123:"304681",126:"5209399",134:"5209757",135:"2019917",149:"304688",162:"2020596",165:"304696",170:"304699",175:"304705",180:"304710",188:"304712",190:"304721",191:"4591661",193:"2019920",200:"304727",201:"5209941",210:"304729",218:"2020593",220:"304735",223:"2020594",226:"304743",227:"304749",228:"304755",229:"304761",230:"304767",231:"304773",232:"304779",233:"304785",234:"304791",235:"304797"};
 const SALESCNT={8:5,12:3,14:7,15:1,19:1,28:1,33:3,40:14,42:9,51:2,56:7,68:2,76:0,81:21,83:3,88:1,89:6,102:0,117:4,123:7,126:6,134:17,135:4,149:2,162:5,165:7,170:12,175:39,180:7,188:4,190:11,191:6,193:4,200:4,201:2,210:6,218:4,220:5,223:1,226:1,227:6,228:2,229:14,230:49,231:4,232:23,233:4,234:32,235:28};
-const OWNEDNUM={30:["Raw",34.00,"2026-11-18"],68:["PSA 8",68.39,"2026-11-18"],226:["Raw",14.41,"2026-11-17"],209:["PSA 6",30.90,"2026-11-11"],97:["PSA 9",59.10,"2026-11-09"],21:["PSA 8",23.35,"2026-11-09"],200:["PSA 4",29.51,"2026-11-09"],206:["PSA 9",48.98,"2026-11-09"],122:["PSA 4",23.36,"2026-11-09"],5:["Raw",8,"2026-10-24"],7:["Raw",12,"2026-10-24"],17:["Raw",12,"2026-10-24"],29:["Raw",10,"2026-10-24"],35:["Raw",8,"2026-10-24"],60:["Raw",8,"2026-10-24"],73:["Raw",10,"2026-10-24"],78:["Raw",8,"2026-10-24"],80:["Raw",8,"2026-10-24"],98:["Raw",10,"2026-10-24"],99:["Raw",10,"2026-10-24"],109:["Raw",8,"2026-10-24"],124:["Raw",12,"2026-10-24"],125:["PSA 9",128,"2026-10-26"],127:["Raw",10,"2026-10-24"],130:["Raw",12,"2026-10-24"],145:["Raw",10,"2026-10-24"],149:["Raw",12,"2026-10-24"],185:["Raw",12,"2026-10-24"],196:["Raw",8,"2026-10-24"],205:["Raw",10,"2026-10-24"],213:["Raw",8,"2026-10-24"],223:["Raw",15,"2026-10-24"],231:["Raw",10,"2026-10-24"],6:["Raw",10,"2026-10-23"],12:["Raw",92,"2026-10-15"],13:["Raw",7.75,"2026-10-23"],59:["Raw",19.99,"2026-10-20"],76:["Raw",19.99,"2026-10-21"],88:["Raw",40,"2026-10-22"],90:["Raw",9.99,"2026-10-20"],119:["Raw",24.99,"2026-10-21"],175:["PSA 9",2880,"2026-10-20"],19:["Raw",28.81,"2026-10-19"],53:["Raw",17.92,"2026-10-19"],63:["Raw",14.48,"2026-10-19"],89:["Raw",46,"2026-10-15"],95:["Raw",15.93,"2026-10-19"],102:["PSA 8",41.29,"2026-11-11"],121:["Raw",18,"2026-10-23"],129:["Raw",7.5,"2026-10-23"],135:["Raw",90,"2026-10-15"],138:["Raw",6.5,"2026-10-23"],140:["Raw",17.5,"2026-10-23"],143:["Raw",13.59,"2026-10-19"],150:["Raw",4.25,"2026-10-22"],153:["Raw",12.2,"2026-10-23"],169:["PSA 7",55.20,"2026-11-09"],173:["Raw",3.15,"2026-10-22"],180:["Raw",40.57,"2026-10-19"],191:["Raw",18.81,"2026-10-19"],201:["Raw",49.95,"2026-10-16"],210:["PSA 9",95,"2026-10-14"],216:["Raw",4.85,"2026-10-14"],217:["Raw",20.56,"2026-10-19"],218:["Raw",35,"2026-10-22"],219:["Raw",19.43,"2026-10-19"],220:["Raw",35,"2026-10-15"],225:["Raw",14.38,"2026-10-19"],227:["PSA 9",35,"2026-10-23"],228:["Raw",17.05,"2026-10-19"],229:["PSA 9",46,"2026-10-14"],230:["PSA 9",190,"2020-10-21"],233:["PSA 9",45,"2026-11-14"],234:["PSA 9",840,"2026-10-18"],235:["PSA 9",300,"2026-10-01"],236:["Raw",11.48,"2026-10-14"],237:["Raw",3.85,"2026-10-22"],238:["Raw",8.43,"2026-10-14"],239:["Raw",7.17,"2026-10-14"],243:["Raw",8.43,"2026-10-14"],244:["Raw",8.99,"2026-10-22"],246:["Raw",14.54,"2026-10-14"]};
+const OWNEDNUM={30:["Raw",34.00,"2026-11-18"],68:["PSA 8",68.39,"2026-11-18"],226:["Raw",14.41,"2026-11-17"],209:["PSA 6",30.90,"2026-11-11"],97:["PSA 9",59.10,"2026-11-09"],21:["PSA 8",23.35,"2026-11-09"],200:["PSA 4",29.51,"2026-11-09"],206:["PSA 9",48.98,"2026-11-09"],122:["PSA 4",23.36,"2026-11-09"],5:["Raw",8,"2026-10-24"],7:["Raw",12,"2026-10-24"],17:["Raw",12,"2026-10-24"],29:["Raw",10,"2026-10-24"],35:["Raw",8,"2026-10-24"],60:["Raw",8,"2026-10-24"],73:["Raw",10,"2026-10-24"],78:["Raw",8,"2026-10-24"],80:["Raw",8,"2026-10-24"],98:["Raw",10,"2026-10-24"],99:["Raw",10,"2026-10-24"],109:["Raw",8,"2026-10-24"],124:["Raw",12,"2026-10-24"],125:["PSA 9",128,"2026-10-26"],127:["Raw",10,"2026-10-24"],130:["Raw",12,"2026-10-24"],145:["Raw",10,"2026-10-24"],149:["Raw",12,"2026-10-24"],185:["Raw",12,"2026-10-24"],196:["Raw",8,"2026-10-24"],205:["Raw",10,"2026-10-24"],213:["Raw",8,"2026-10-24"],223:["Raw",15,"2026-10-24"],231:["Raw",10,"2026-10-24"],6:["Raw",10,"2026-10-23"],12:["Raw",92,"2026-10-15"],13:["Raw",7.75,"2026-10-23"],59:["Raw",19.99,"2026-10-20"],76:["Raw",19.99,"2026-10-21"],88:["Raw",40,"2026-10-22"],90:["Raw",9.99,"2026-10-20"],119:["Raw",24.99,"2026-10-21"],175:["PSA 9",2880,"2026-10-20"],19:["Raw",28.81,"2026-10-19"],53:["Raw",17.92,"2026-10-19"],63:["Raw",14.48,"2026-10-19"],89:["Raw",46,"2026-10-15"],95:["Raw",15.93,"2026-10-19"],102:["PSA 8",41.29,"2026-11-11"],121:["Raw",18,"2026-10-23"],129:["Raw",7.5,"2026-10-23"],135:["Raw",90,"2026-10-15"],138:["Raw",6.5,"2026-10-23"],140:["PSA 10",269.96,"2026-11-20"],178:["PSA 10",299.95,"2026-11-20"],143:["Raw",13.59,"2026-10-19"],150:["Raw",4.25,"2026-10-22"],153:["Raw",12.2,"2026-10-23"],169:["PSA 7",55.20,"2026-11-09"],173:["Raw",3.15,"2026-10-22"],180:["Raw",40.57,"2026-10-19"],191:["Raw",18.81,"2026-10-19"],201:["Raw",49.95,"2026-10-16"],210:["PSA 9",95,"2026-10-14"],216:["Raw",4.85,"2026-10-14"],217:["Raw",20.56,"2026-10-19"],218:["Raw",35,"2026-10-22"],219:["Raw",19.43,"2026-10-19"],220:["Raw",35,"2026-10-15"],225:["Raw",14.38,"2026-10-19"],227:["PSA 9",35,"2026-10-23"],228:["Raw",17.05,"2026-10-19"],229:["PSA 9",46,"2026-10-14"],230:["PSA 9",190,"2020-10-21"],233:["PSA 9",45,"2026-11-14"],234:["PSA 9",840,"2026-10-18"],235:["PSA 9",300,"2026-10-01"],236:["Raw",11.48,"2026-10-14"],237:["Raw",3.85,"2026-10-22"],238:["Raw",8.43,"2026-10-14"],239:["Raw",7.17,"2026-10-14"],243:["Raw",8.43,"2026-10-14"],244:["Raw",8.99,"2026-10-22"],246:["Raw",14.54,"2026-10-14"]};
+// Keep the want list in sync with the full-set checklist: OWNEDNUM (by card #) is the source of truth.
+// For every want-list row, if that card number is owned in the checklist, reflect it in OWNED (by spec).
+(function reconcileOwnership(){
+  const SPEC2NUM={}; for(const n in NPRSPEC) SPEC2NUM[NPRSPEC[n]]=+n;
+  META.forEach(r=>{
+    const spec=r[2];
+    const cn = r[3] ? parseInt(String(r[3]).replace(/[^0-9]/g,""),10) : (SPEC2NUM[spec]||null);
+    if(cn && OWNEDNUM[cn] && !OWNED[spec]){
+      const o=OWNEDNUM[cn];
+      OWNED[spec]={g:(o[0]==="Raw"?"Ungraded":o[0]),paid:o[1],d:o[2]};
+    }
+  });
+})();
 const FL={graded:["f-graded","Active graded"],thin:["f-thin","Thin graded"],none:["f-none","No graded 3 yrs"]};
 const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const money=v=>"$"+Number(v).toLocaleString(undefined,{maximumFractionDigits:2});
@@ -509,15 +537,15 @@ function save(){ try{ localStorage.setItem("nprHofWant",JSON.stringify(state)); 
 const DRAFTGRP="1998 Draft — Top 10 Picks";
 const ROOKIE=new Set(["304767","304797","304791"]); // HOF rookies shown only in the draft section
 const GRADINGSPEC=new Set(["2019553","2020860","2019558","5209664","2020593","304735"]); // specs of cards currently at PSA for grading
-function buildRow(r,body){
+function buildRow(r,body,idx){
   const [grp,p,spec,num,flag,pick]=r;
   const owned=OWNED[spec];
   const checked=!!state[spec], maybe=!!maybeState[spec] && !checked;
   const sales=SALES5[spec]||[], pop=POPS[spec]||[0,0,0,0,0];
   const tr=document.createElement("tr"); tr.className = checked ? "done" : (maybe ? "maybe" : "");
-  const url="https://www.psacard.com/spec/psa/"+spec;
-  tr.innerHTML=`<td><input type="checkbox" ${checked?"checked":""}></td>`+
-    `<td>${checked?'':'<button class="mb '+(maybe?'on':'')+'" title="Considering">?</button>'}</td>`+
+  const url=/^\d+$/.test(spec)?"https://www.psacard.com/spec/psa/"+spec:"https://www.psacard.com/pop/basketball-cards/1998/finest/36277";
+  tr.innerHTML=`<td class="rownum">${idx}</td>`+
+    `<td><input type="checkbox" ${checked?"checked":""}></td>`+
     `<td class="pl">${pick?'<span class="pick">#'+pick+'</span>':''}<b>${p}</b> ${num?'<span class="num">'+num+'</span>':''}${owned?'<span class="own">OWNED</span>':''}${GRADINGSPEC.has(spec)?' <span class="bGRD">⏳ at grading</span>':''}<br><a href="${url}" target="_blank" rel="noopener">PSA ↗</a></td>`+
     `<td class="grade">${owned?owned.g:'<span class="dash">—</span>'}</td>`+
     `<td class="paid">${owned?money(owned.paid)+(owned.d?'<br><span class="pdate">'+fmtD(owned.d)+'</span>':''):'<span class="dash">—</span>'}</td>`+
@@ -525,7 +553,6 @@ function buildRow(r,body){
     `<td>${saleCell(sales[0])}</td><td>${saleCell(sales[1])}</td><td>${saleCell(sales[2])}</td><td>${saleCell(sales[3])}</td><td>${saleCell(sales[4])}</td>`+
     `<td class="pop big">${pop[0]}</td><td class="pop p10">${pop[1]}</td><td class="pop">${pop[2]}</td><td class="pop">${pop[3]}</td><td class="pop">${pop[4]}</td>`;
   tr.querySelector("input").addEventListener("change",e=>{ state[spec]=e.target.checked; if(e.target.checked) delete maybeState[spec]; save(); render(); });
-  const mbtn=tr.querySelector(".mb"); if(mbtn) mbtn.addEventListener("click",()=>{ maybeState[spec]=!maybeState[spec]; save(); render(); });
   body.appendChild(tr);
 }
 function section(title,body){ const sr=document.createElement("tr"); sr.className="sec"; sr.innerHTML=`<td colspan="16">${title}</td>`; body.appendChild(sr); }
@@ -537,17 +564,16 @@ function render(){
   const heavy = META.filter(r=>r[0]===HEAVYGRP).sort(byPop);
   const draft = META.filter(r=>r[0]===DRAFTGRP);
   section("Hall of Famers — sorted by total PSA population",body);
-  hof.forEach(r=>buildRow(r,body));
-  section(HEAVYGRP+" — fan favourites, mostly collected ungraded",body);
-  heavy.forEach(r=>buildRow(r,body));
+  hof.forEach((r,i)=>buildRow(r,body,i+1));
+  section("1998 All-Stars, Top 25 Scoring Leaders and Fan Favorites (Non-HOF)",body);
+  heavy.forEach((r,i)=>buildRow(r,body,i+1));
   section(DRAFTGRP,body);
-  draft.forEach(r=>buildRow(r,body));
+  draft.forEach((r,i)=>buildRow(r,body,i+1));
   const all=new Set(), done=new Set(), mb=new Set();
   META.forEach(r=>{ all.add(r[2]); if(state[r[2]]) done.add(r[2]); if(maybeState[r[2]]&&!state[r[2]]) mb.add(r[2]); });
   document.getElementById("cnt").textContent=done.size;
   document.getElementById("tot").textContent=all.size;
   document.getElementById("fill").style.width=(done.size/all.size*100)+"%";
-  document.getElementById("mbc").textContent=mb.size;
   // investment breakdown across ALL owned cards (OWNEDNUM)
   let gN=0,gS=0,rN=0,rS=0;
   Object.values(OWNEDNUM).forEach(o=>{ if(String(o[0]).indexOf("PSA")===0){gN++;gS+=o[1];} else {rN++;rS+=o[1];} });
