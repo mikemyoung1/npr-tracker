@@ -64,6 +64,27 @@
 #grTable th,#grTable td{ padding:6px 10px; border-bottom:1px solid #e5e8ee; font-size:13px; text-align:center; }
 #grTable td:first-child{ text-align:left; font-weight:600; }
 td.rownum{ text-align:center; color:var(--muted); font-size:12px; font-variant-numeric:tabular-nums; }
+.gpH{ margin:22px 0 6px; font-size:16px; }
+.gpCount{ display:inline-block; background:var(--navy); color:#fff; font-size:12px; font-weight:700; border-radius:999px; padding:1px 9px; vertical-align:2px; }
+.gpTable{ width:100%; border-collapse:collapse; }
+.gpTable th,.gpTable td{ padding:6px 10px; border-bottom:1px solid #e9ecf1; font-size:13px; text-align:left; }
+.gpTable th{ font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); }
+.gpTable td.c,.gpTable th.c{ text-align:center; }
+.gpsec{ margin:18px 0 4px; font-size:15px; display:flex; align-items:center; gap:8px; }
+.gpsec .gpCount{ background:#6b7280; }
+.gpDesc{ color:var(--muted); font-size:12.5px; margin:0 0 6px; }
+.bGrd2{ display:inline-block; background:#1f6f43; color:#d7f7e4; font-size:9px; font-weight:800; border-radius:4px; padding:1px 4px; vertical-align:1px; }
+.bHint{ display:inline-block; font-size:11px; }
+.gchk{ transform:scale(1.15); cursor:pointer; }
+td.cgr{ text-align:center; }
+td.cgr.slabcell{ background:#f4f5f7; }
+td.cgr.buycell{ background:#eef4ff; }
+.gslab{ display:inline-block; font-size:10px; font-weight:700; color:#aab0ba; white-space:nowrap; }
+.gbuy{ display:inline-block; font-size:10px; font-weight:700; color:#3f6fc9; white-space:nowrap; }
+.statusPill{ display:inline-block; font-size:11px; font-weight:700; border-radius:999px; padding:1px 8px; }
+.sp-own{ background:#e6f4ea; color:#1f6f43; } .sp-no{ background:#f3f4f6; color:#6b7280; } .sp-sub{ background:#7a4a12; color:#ffd9a8; }
+.gpRemove{ cursor:pointer; color:#b04545; font-weight:700; border:none; background:none; font-size:14px; }
+.gpMove{ font-size:12px; padding:3px 6px; border:1px solid #c7ccd4; border-radius:6px; background:#fff; cursor:pointer; }
 #chkTable thead tr:first-child th{ position:static; top:auto; z-index:auto; }
 #chkTable th.gsales, #chkTable td.gsales{ border-left:2px solid #c3ccda; border-right:2px solid #c3ccda; }
 #chkTable tr.own{ background:#bfe8cc; }
@@ -143,6 +164,7 @@ td.rownum{ text-align:center; color:var(--muted); font-size:12px; font-variant-n
     <button class="tabbtn" data-pane="paneYR">PSA 9 by Year</button>
     <button class="tabbtn" data-pane="paneSET">Set Sales by Year</button>
     <button class="tabbtn" data-pane="paneGR">PSA Grade Breakdown</button>
+    <button class="tabbtn" data-pane="paneGRADE">Grading Plan</button>
   </div>
 
   <div id="paneWL" class="pane active">
@@ -182,7 +204,7 @@ td.rownum{ text-align:center; color:var(--muted); font-size:12px; font-variant-n
 
   <div class="chk">
     <h2 style="margin:22px 0 2px">Full set checklist — every 1998 Finest NPR card</h2>
-    <p class="csub" style="margin:0 0 10px"><span class="owndot"></span> dark green = owned · <span class="wantdot"></span> light green = wanted (tick the Wanted box). <span class="bAS">AS</span> = made an All-Star game, <span class="bHOF">HOF</span> = Hall of Famer. <strong>Graded sales</strong> = total PSA-graded sales on record (every card links via PSA ↗ to its pop report). <strong>PSA 10 / 9 / 8 / 7↓</strong> columns are current <strong>PSA Population Report</strong> counts (PSA-labeled NPR — see the ⚠ note at the top of the page; verified double-refractor NPRs are rarer). Click a column header to sort, or use the search box to filter by player or card number.</p>
+    <p class="csub" style="margin:0 0 10px"><span class="owndot"></span> dark green = owned · <span class="wantdot"></span> light green = wanted (tick the Wanted box). <span class="bAS">AS</span> = made an All-Star game, <span class="bHOF">HOF</span> = Hall of Famer. <strong>Graded sales</strong> = total PSA-graded sales on record (every card links via PSA ↗ to its pop report). <strong>PSA 10 / 9 / 8 / 7↓</strong> columns are current <strong>PSA Population Report</strong> counts (PSA-labeled NPR — see the ⚠ note at the top of the page; verified double-refractor NPRs are rarer). Click a column header to sort, or use the search box to filter by player or card number. <strong>Grade?</strong> column: tick to add a card to the Grading Plan; 🔨 = suggested grade target, 💠 buy graded = active-market card to buy already-slabbed, ✓ graded = you already own it graded, ⏳ = at PSA now.</p>
     <div class="chkbar">
       <input type="search" id="chkSearch" class="chkSearch" placeholder="Search player or card #…" autocomplete="off">
       <span id="chkSummary" class="chkSum"></span>
@@ -191,9 +213,10 @@ td.rownum{ text-align:center; color:var(--muted); font-size:12px; font-variant-n
     <div class="scroll">
       <table id="chkTable">
         <thead>
-        <tr><th colspan="8"></th><th colspan="5" class="popgrp">PSA Pop Report</th></tr>
+        <tr><th colspan="9"></th><th colspan="5" class="popgrp">PSA Pop Report</th></tr>
         <tr>
           <th data-k="wanted" class="sortable">Wanted</th>
+          <th data-k="gradesel" class="sortable">Grade?</th>
           <th data-k="num" class="sortable">#</th>
           <th data-k="player" class="sortable">Player</th>
           <th data-k="owned" class="sortable">Owned</th>
@@ -345,6 +368,22 @@ td.rownum{ text-align:center; color:var(--muted); font-size:12px; font-variant-n
     <div class="cbox"><table id="grTable"><thead><tr><th style="text-align:left">Grade</th><th>Count</th><th>% of graded</th><th>Cumulative from top</th></tr></thead><tbody id="grtb"></tbody></table></div>
     <p class="cnote">Counts include the small number of qualifier slabs (e.g. a "9(OC)") within their numeric grade. "Authentic" = PSA N0 (authentic, no numeric grade). The set skews extremely high: more than half of everything graded is a PSA 9, and roughly three in four slabs are PSA 9-or-10 — typical of a late-90s chrome parallel where survivors were handled carefully, so the grade scarcity that matters is PSA 10 (and clean 9s on the star cards).</p>
     <div class="cbox tldr"><p style="margin:0"><strong>Takeaway.</strong> 1,409 graded in total, but the pyramid is top-heavy: <strong>298 PSA 10s</strong> and <strong>748 PSA 9s</strong> make up ~74% of the population, while anything <strong>PSA 7 or below is genuinely scarce (just ~104 slabs across the whole set)</strong>. For most names the PSA 10 is the only real condition-rarity play; mid-grade NPRs are cheap because they're common <em>and</em> because peeled regular Refractors keep getting mislabeled into the same pool.</p></div>
+  </div>
+
+  <div id="paneGRADE" class="pane cmp">
+    <h2>Grading plan</h2>
+    <p class="csub">16 submission slots prepaid with your brother. Tick <strong>Grade?</strong> on any card in the full-set checklist (Want List tab): if you own it, it lands in <strong>Bought — on the fence</strong>; if you don't, it lands in <strong>Want to buy &amp; grade — maybe</strong>. From there use the dropdown on each row to move it anywhere (Allotted, High-priority, etc.). Within each section, cards you own raw are listed first. 🔨 in the checklist flags want-list cards that aren't actively graded (good grade candidates).</p>
+
+    <div class="grwrap">
+      <div class="cbox grstat"><div class="grbig" id="gpSlots">—</div><div class="grlbl">prepaid slots used</div></div>
+      <div class="cbox grstat"><div class="grbig" id="gpSub">—</div><div class="grlbl">submitted (at PSA now)</div></div>
+      <div class="cbox grstat"><div class="grbig" id="gpAllot">—</div><div class="grlbl">allotted & ready to send</div></div>
+      <div class="cbox grstat"><div class="grbig" id="gpCons">—</div><div class="grlbl">on the want-to-buy &amp; grade list</div></div>
+    </div>
+
+    <div id="gpSections"></div>
+
+    <div class="cbox tldr"><p style="margin:0"><strong>Note on Penny Hardaway (#170).</strong> You're waiting for a graded copy to surface rather than grading a raw — so he's intentionally kept out of the submission plan.</p></div>
   </div>
 
 </div>
@@ -508,7 +547,7 @@ const NPRSPEC={1:"2020856",2:"2020858",3:"11408486",4:"2020857",5:"2019912",7:"3
 // Owned by card number: cardNo -> [grade, paid, date]
 const SPECNUM={8:"5209820",12:"2019553",14:"304637",15:"2020586",19:"2020860",28:"2020851",33:"2019552",40:"304648",42:"304654",51:"2020838",56:"5210023",68:"5209985",76:"14278336",81:"304664",83:"1876704",88:"5209545",89:"2019558",102:"2020635",117:"304679",123:"304681",126:"5209399",134:"5209757",135:"2019917",149:"304688",162:"2020596",165:"304696",170:"304699",175:"304705",180:"304710",188:"304712",190:"304721",191:"4591661",193:"2019920",200:"304727",201:"5209941",210:"304729",218:"2020593",220:"304735",223:"2020594",226:"304743",227:"304749",228:"304755",229:"304761",230:"304767",231:"304773",232:"304779",233:"304785",234:"304791",235:"304797"};
 const SALESCNT={8:5,12:3,14:7,15:1,19:1,28:1,33:3,40:14,42:9,51:2,56:7,68:2,76:0,81:21,83:3,88:1,89:6,102:0,117:4,123:7,126:6,134:17,135:4,149:2,162:5,165:7,170:12,175:39,180:7,188:4,190:11,191:6,193:4,200:4,201:2,210:6,218:4,220:5,223:1,226:1,227:6,228:2,229:14,230:49,231:4,232:23,233:4,234:32,235:28};
-const OWNEDNUM={30:["Raw",34.00,"2026-11-18"],68:["PSA 8",68.39,"2026-11-18"],226:["Raw",14.41,"2026-11-17"],209:["PSA 6",30.90,"2026-11-11"],97:["PSA 9",59.10,"2026-11-09"],21:["PSA 8",23.35,"2026-11-09"],200:["PSA 4",29.51,"2026-11-09"],206:["PSA 9",48.98,"2026-11-09"],122:["PSA 4",23.36,"2026-11-09"],5:["Raw",8,"2026-10-24"],7:["Raw",12,"2026-10-24"],17:["Raw",12,"2026-10-24"],29:["Raw",10,"2026-10-24"],35:["Raw",8,"2026-10-24"],60:["Raw",8,"2026-10-24"],73:["Raw",10,"2026-10-24"],78:["Raw",8,"2026-10-24"],80:["Raw",8,"2026-10-24"],98:["Raw",10,"2026-10-24"],99:["Raw",10,"2026-10-24"],109:["Raw",8,"2026-10-24"],124:["Raw",12,"2026-10-24"],125:["PSA 9",128,"2026-10-26"],127:["Raw",10,"2026-10-24"],130:["Raw",12,"2026-10-24"],145:["Raw",10,"2026-10-24"],149:["Raw",12,"2026-10-24"],185:["Raw",12,"2026-10-24"],196:["Raw",8,"2026-10-24"],205:["Raw",10,"2026-10-24"],213:["Raw",8,"2026-10-24"],223:["Raw",15,"2026-10-24"],231:["Raw",10,"2026-10-24"],6:["Raw",10,"2026-10-23"],12:["Raw",92,"2026-10-15"],13:["Raw",7.75,"2026-10-23"],59:["Raw",19.99,"2026-10-20"],76:["Raw",19.99,"2026-10-21"],88:["Raw",40,"2026-10-22"],90:["Raw",9.99,"2026-10-20"],119:["Raw",24.99,"2026-10-21"],175:["PSA 9",2880,"2026-10-20"],19:["Raw",28.81,"2026-10-19"],53:["Raw",17.92,"2026-10-19"],63:["Raw",14.48,"2026-10-19"],89:["Raw",46,"2026-10-15"],95:["Raw",15.93,"2026-10-19"],102:["PSA 8",41.29,"2026-11-11"],121:["Raw",18,"2026-10-23"],129:["Raw",7.5,"2026-10-23"],135:["Raw",90,"2026-10-15"],138:["Raw",6.5,"2026-10-23"],140:["PSA 10",269.96,"2026-11-20"],178:["PSA 10",299.95,"2026-11-20"],143:["Raw",13.59,"2026-10-19"],150:["Raw",4.25,"2026-10-22"],153:["Raw",12.2,"2026-10-23"],169:["PSA 7",55.20,"2026-11-09"],173:["Raw",3.15,"2026-10-22"],180:["Raw",40.57,"2026-10-19"],191:["Raw",18.81,"2026-10-19"],201:["Raw",49.95,"2026-10-16"],210:["PSA 9",95,"2026-10-14"],216:["Raw",4.85,"2026-10-14"],217:["Raw",20.56,"2026-10-19"],218:["Raw",35,"2026-10-22"],219:["Raw",19.43,"2026-10-19"],220:["Raw",35,"2026-10-15"],225:["Raw",14.38,"2026-10-19"],227:["PSA 9",35,"2026-10-23"],228:["Raw",17.05,"2026-10-19"],229:["PSA 9",46,"2026-10-14"],230:["PSA 9",190,"2020-10-21"],233:["PSA 9",45,"2026-11-14"],234:["PSA 9",840,"2026-10-18"],235:["PSA 9",300,"2026-10-01"],236:["Raw",11.48,"2026-10-14"],237:["Raw",3.85,"2026-10-22"],238:["Raw",8.43,"2026-10-14"],239:["Raw",7.17,"2026-10-14"],243:["Raw",8.43,"2026-10-14"],244:["Raw",8.99,"2026-10-22"],246:["Raw",14.54,"2026-10-14"]};
+const OWNEDNUM={83:["Raw",99,"2026-11-24"],162:["Raw",30,"2026-11-23"],30:["Raw",34.00,"2026-11-18"],68:["PSA 8",68.39,"2026-11-18"],226:["Raw",14.41,"2026-11-17"],209:["PSA 6",30.90,"2026-11-11"],97:["PSA 9",59.10,"2026-11-09"],21:["PSA 8",23.35,"2026-11-09"],200:["PSA 4",29.51,"2026-11-09"],206:["PSA 9",48.98,"2026-11-09"],122:["PSA 4",23.36,"2026-11-09"],5:["Raw",8,"2026-10-24"],7:["Raw",12,"2026-10-24"],17:["Raw",12,"2026-10-24"],29:["Raw",10,"2026-10-24"],35:["Raw",8,"2026-10-24"],60:["Raw",8,"2026-10-24"],73:["Raw",10,"2026-10-24"],78:["Raw",8,"2026-10-24"],80:["Raw",8,"2026-10-24"],98:["Raw",10,"2026-10-24"],99:["Raw",10,"2026-10-24"],109:["Raw",8,"2026-10-24"],124:["Raw",12,"2026-10-24"],125:["PSA 9",128,"2026-10-26"],127:["Raw",10,"2026-10-24"],130:["Raw",12,"2026-10-24"],145:["Raw",10,"2026-10-24"],149:["Raw",12,"2026-10-24"],185:["Raw",12,"2026-10-24"],196:["Raw",8,"2026-10-24"],205:["Raw",10,"2026-10-24"],213:["Raw",8,"2026-10-24"],223:["Raw",15,"2026-10-24"],231:["Raw",10,"2026-10-24"],6:["Raw",10,"2026-10-23"],12:["Raw",92,"2026-10-15"],13:["Raw",7.75,"2026-10-23"],59:["Raw",19.99,"2026-10-20"],76:["Raw",19.99,"2026-10-21"],88:["Raw",40,"2026-10-22"],90:["Raw",9.99,"2026-10-20"],119:["Raw",24.99,"2026-10-21"],175:["PSA 9",2880,"2026-10-20"],19:["Raw",28.81,"2026-10-19"],53:["Raw",17.92,"2026-10-19"],63:["Raw",14.48,"2026-10-19"],89:["Raw",46,"2026-10-15"],95:["Raw",15.93,"2026-10-19"],102:["PSA 8",41.29,"2026-11-11"],121:["Raw",18,"2026-10-23"],129:["Raw",7.5,"2026-10-23"],135:["Raw",90,"2026-10-15"],138:["Raw",6.5,"2026-10-23"],140:["PSA 10",269.96,"2026-11-20"],178:["PSA 10",299.95,"2026-11-20"],143:["Raw",13.59,"2026-10-19"],150:["Raw",4.25,"2026-10-22"],153:["Raw",12.2,"2026-10-23"],169:["PSA 7",55.20,"2026-11-09"],173:["Raw",3.15,"2026-10-22"],180:["Raw",40.57,"2026-10-19"],191:["Raw",18.81,"2026-10-19"],201:["Raw",49.95,"2026-10-16"],210:["PSA 9",95,"2026-10-14"],216:["Raw",4.85,"2026-10-14"],217:["Raw",20.56,"2026-10-19"],218:["Raw",35,"2026-10-22"],219:["Raw",19.43,"2026-10-19"],220:["Raw",35,"2026-10-15"],225:["Raw",14.38,"2026-10-19"],227:["PSA 9",35,"2026-10-23"],228:["Raw",17.05,"2026-10-19"],229:["PSA 9",46,"2026-10-14"],230:["PSA 9",190,"2020-10-21"],233:["PSA 9",45,"2026-11-14"],234:["PSA 9",840,"2026-10-18"],235:["PSA 9",300,"2026-10-01"],236:["Raw",11.48,"2026-10-14"],237:["Raw",3.85,"2026-10-22"],238:["Raw",8.43,"2026-10-14"],239:["Raw",7.17,"2026-10-14"],243:["Raw",8.43,"2026-10-14"],244:["Raw",8.99,"2026-10-22"],246:["Raw",14.54,"2026-10-14"]};
 // Keep the want list in sync with the full-set checklist: OWNEDNUM (by card #) is the source of truth.
 // For every want-list row, if that card number is owned in the checklist, reflect it in OWNED (by spec).
 (function reconcileOwnership(){
@@ -598,11 +637,34 @@ const HOFSET=new Set([8,12,14,15,19,28,33,40,42,51,56,68,76,81,83,89,102,117,123
 let chkWant={}; try{ chkWant=JSON.parse(localStorage.getItem("nprChkWanted")||"{}"); }catch(e){}
 function chkSave(){ try{ localStorage.setItem("nprChkWanted",JSON.stringify(chkWant)); }catch(e){} }
 const isWanted=n=>!!chkWant[n] || (n in OWNEDNUM);
+// Grading plan: each card number lives in exactly one bucket (allotted/buy_high/fence/buy_maybe)
+let gradePlan=null; try{ gradePlan=JSON.parse(localStorage.getItem("nprGradePlan")||"null"); }catch(e){ gradePlan=null; }
+const isSlabN=n=>{ const o=OWNEDNUM[n]; return o && String(o[0]).indexOf("PSA")===0; };
+if(!gradePlan){ gradePlan={};
+  [83,135,201,217,88].forEach(n=>gradePlan[n]="allotted");
+  [162].forEach(n=>gradePlan[n]="fence");
+  [117,33,15,28,126].forEach(n=>gradePlan[n]="buy_high");
+  [37].forEach(n=>gradePlan[n]="buy_maybe");
+  try{ const old=JSON.parse(localStorage.getItem("nprGradeSel")||"{}"); Object.keys(old).forEach(n=>{ if(!(n in gradePlan)) gradePlan[n]="considering"; }); }catch(e){}
+}
+function gradeSave(){ try{ localStorage.setItem("nprGradePlan",JSON.stringify(gradePlan)); }catch(e){} }
+const inPlan=n=>String(n) in gradePlan;
+// Suggested grading targets: curated want-list cards that aren't actively graded, not already slabbed, not at PSA
+const SUGGESTGRADE=(function(){ const s=new Set(); const S2N={}; for(const n in NPRSPEC) S2N[NPRSPEC[n]]=+n;
+  META.forEach(r=>{ const cn=r[3]?parseInt(String(r[3]).replace(/[^0-9]/g,""),10):(S2N[r[2]]||null);
+    if(cn && r[4]!==G && !GRADING.has(cn) && !isSlabN(cn)) s.add(cn); }); return s; })();
+// "Active Graded" want-list cards: plan is to buy a graded copy, not grade raw — so not grading candidates
+const BUYGRADED=(function(){ const s=new Set(); const S2N={}; for(const n in NPRSPEC) S2N[NPRSPEC[n]]=+n;
+  META.forEach(r=>{ if(r[4]===G){ const cn=r[3]?parseInt(String(r[3]).replace(/[^0-9]/g,""),10):(S2N[r[2]]||null); if(cn) s.add(cn); } }); return s; })();
+// Already-graded or buy-graded cards aren't grading candidates — drop any previously tagged
+Object.keys(gradePlan).forEach(n=>{ if(isSlabN(+n) || BUYGRADED.has(+n)){ delete gradePlan[n]; } });
+// Retire the old "considering" state: owned → on the fence, not owned → want-to-buy maybe
+Object.keys(gradePlan).forEach(n=>{ if(gradePlan[n]==="considering"){ gradePlan[n]=(+n in OWNEDNUM)?"fence":"buy_maybe"; } }); gradeSave();
 let chkSort={k:"num",dir:1};
 function renderChecklist(){
   const body=document.getElementById("chkBody"); if(!body) return;
   const ownedOnly=document.getElementById("ownOnly").checked;
-  let rows=CHECKLIST.map(c=>{const o=OWNEDNUM[c[0]]||null;const sc=(c[0] in SALESCNT)?SALESCNT[c[0]]:-1;return {num:c[0],player:c[1],p10:c[2],p9:c[3],p8:c[4],p7:c[5],total:c[2]+c[3]+c[4]+c[5],owned:o?1:0,grade:o?o[0]:"",paid:o?o[1]:null,date:o?o[2]:"",sales:sc,wanted:isWanted(c[0])?1:0};});
+  let rows=CHECKLIST.map(c=>{const o=OWNEDNUM[c[0]]||null;const sc=(c[0] in SALESCNT)?SALESCNT[c[0]]:-1;return {num:c[0],player:c[1],p10:c[2],p9:c[3],p8:c[4],p7:c[5],total:c[2]+c[3]+c[4]+c[5],owned:o?1:0,grade:o?o[0]:"",paid:o?o[1]:null,date:o?o[2]:"",sales:sc,wanted:isWanted(c[0])?1:0,gradesel:inPlan(c[0])?1:0};});
   if(ownedOnly) rows=rows.filter(r=>r.owned);
   const sb=document.getElementById("chkSearch"); const q=(sb?sb.value:"").trim().toLowerCase();
   if(q) rows=rows.filter(r=>r.player.toLowerCase().includes(q) || String(r.num)===q || String(r.num).includes(q) || (r.grade&&r.grade.toLowerCase().includes(q)));
@@ -621,13 +683,24 @@ function renderChecklist(){
     const salesCell=r.sales>=0?r.sales:((r.p9===0&&r.p10===0)?0:'<span class="dash">—</span>');
     const tags=(ASSET.has(r.num)?' <span class="bAS">AS</span>':'')+(HOFSET.has(r.num)?' <span class="bHOF">HOF</span>':'');
     const wchk=`<input type="checkbox" class="wchk" ${r.wanted?"checked":""} ${r.owned?"disabled":""}>`;
+    const atPSA=GRADING.has(r.num);
+    const slab=isSlabN(r.num);
+    const buyG=BUYGRADED.has(r.num)&&!slab;
+    const sug=SUGGESTGRADE.has(r.num)&&!r.gradesel?' <span class="bHint" title="On your want list and not actively graded — a candidate to grade">🔨</span>':'';
+    const gchk=atPSA?'<span class="bGRD" title="Already at PSA">⏳</span>'
+      :slab?'<span class="gslab" title="Already owned graded — no need to grade">✓ graded</span>'
+      :buyG?'<span class="gbuy" title="Active graded market — plan is to buy a graded copy, not grade raw">💠 buy graded</span>'
+      :`<input type="checkbox" class="gchk gradechk" ${r.gradesel?"checked":""}>${sug}`;
     tr.innerHTML=`<td class="cw">${wchk}</td>`+
+      `<td class="cgr${slab?' slabcell':buyG?' buycell':''}">${gchk}</td>`+
       `<td class="cnum">${r.num}</td><td class="cp">${r.player}${tags}${link}</td>`+
       `<td>${r.owned?'<span class="ownchk">✓</span>':'<span class="dash">—</span>'}</td>`+
       `<td class="cg">${grd}${gflag}</td><td class="cpaid">${paid}</td><td class="cpaid">${dt}</td>`+
       `<td class="pop gsales">${salesCell}</td><td class="pop big">${r.total}</td><td class="pop p10">${r.p10}</td><td class="pop">${r.p9}</td><td class="pop">${r.p8}</td><td class="pop">${r.p7}</td>`;
     const cb=tr.querySelector(".wchk");
     if(cb && !r.owned) cb.addEventListener("change",e=>{ if(e.target.checked) chkWant[r.num]=true; else delete chkWant[r.num]; chkSave(); renderChecklist(); });
+    const gc=tr.querySelector(".gradechk");
+    if(gc) gc.addEventListener("change",e=>{ if(e.target.checked){ if(!inPlan(r.num)) gradePlan[r.num]=(r.num in OWNEDNUM)?"fence":"buy_maybe"; } else delete gradePlan[r.num]; gradeSave(); renderChecklist(); if(typeof renderGrading==="function") renderGrading(); });
     body.appendChild(tr);
   });
   const nOwned=Object.keys(OWNEDNUM).length;
@@ -820,6 +893,52 @@ function buildGrades(){
     data:{labels:GR.map(r=>r[0]),datasets:[{label:"PSA-graded count",data:GR.map(r=>r[1]),backgroundColor:cols}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{title:{display:true,text:"# graded"}}}}});
 }
+// ---- Grading Plan tab ----
+const NUM2NAME={}, NUM2POP={}; CHECKLIST.forEach(c=>{NUM2NAME[c[0]]=c[1]; NUM2POP[c[0]]=[c[2],c[3],c[4],c[5]];});
+const BUCKETS=[
+  {key:"allotted", title:"\u{1F4E6} Allotted — bought & ready to send", desc:"Owned raw and earmarked for this batch."},
+  {key:"buy_high", title:"\u{1F3AF} Want to buy & grade — high priority", desc:"Don't own yet; grab and grade if a clean raw surfaces."},
+  {key:"fence", title:"\u{1F914} Bought — on the fence", desc:"In hand, still deciding whether to grade."},
+  {key:"buy_maybe", title:"\u{1F4AD} Want to buy & grade — maybe", desc:"Don't own yet and undecided — ticked from the checklist land here."},
+];
+const BUCKETOPTS=[["allotted","Allotted"],["buy_high","Buy – high priority"],["fence","On the fence"],["buy_maybe","Buy – maybe"]];
+function gStatusPill(n){ const o=OWNEDNUM[n]; if(GRADING.has(n)) return '<span class="statusPill sp-sub">At PSA</span>'; if(o&&String(o[0]).indexOf("PSA")===0) return '<span class="statusPill sp-own">Slabbed '+o[0]+'</span>'; if(o) return '<span class="statusPill sp-own">Owned raw</span>'; return '<span class="statusPill sp-no">Not owned</span>'; }
+function gPopStr(n){ const p=NUM2POP[n]||[0,0,0,0]; return p.join(" / "); }
+function gOwnRaw(n){ const o=OWNEDNUM[n]; return !!(o && String(o[0])==="Raw"); }
+function setTxt(id,v){ const e=document.getElementById(id); if(e) e.textContent=v; }
+function gSection(title,desc,nums,fixed){
+  const frag=document.createDocumentFragment();
+  const h=document.createElement("h3"); h.className="gpsec"; h.innerHTML=title+' <span class="gpCount">'+nums.length+'</span>'; frag.appendChild(h);
+  const p=document.createElement("p"); p.className="gpDesc"; p.textContent=desc; frag.appendChild(p);
+  const box=document.createElement("div"); box.className="cbox";
+  if(nums.length===0){ box.innerHTML='<p class="cnote" style="margin:0">None yet.</p>'; frag.appendChild(box); return frag; }
+  const table=document.createElement("table"); table.className="gpTable";
+  table.innerHTML='<thead><tr><th class="c">#</th><th>Player</th><th>Status</th><th>Paid</th><th class="c">Pop 10/9/8/7↓</th><th class="c">'+(fixed?'':'Move to')+'</th></tr></thead>';
+  const tb=document.createElement("tbody");
+  nums.forEach(n=>{ const o=OWNEDNUM[n]; const paid=o?money(o[1]):'<span class="dash">—</span>';
+    const tr=document.createElement("tr");
+    let ctrl='';
+    if(!fixed){ ctrl='<select class="gpMove" data-n="'+n+'">'+BUCKETOPTS.map(b=>'<option value="'+b[0]+'"'+(gradePlan[n]===b[0]?' selected':'')+'>'+b[1]+'</option>').join('')+'<option value="__remove">✕ Remove</option></select>'; }
+    tr.innerHTML='<td class="c">'+n+'</td><td><b>'+(NUM2NAME[n]||'#'+n)+'</b></td><td>'+gStatusPill(n)+'</td><td>'+paid+'</td><td class="c">'+gPopStr(n)+'</td><td class="c">'+ctrl+'</td>';
+    if(!fixed){ tr.querySelector(".gpMove").addEventListener("change",e=>{ const v=e.target.value; if(v==="__remove") delete gradePlan[n]; else gradePlan[n]=v; gradeSave(); renderGrading(); renderChecklist(); }); }
+    tb.appendChild(tr); });
+  table.appendChild(tb); box.appendChild(table); frag.appendChild(box); return frag;
+}
+function renderGrading(){
+  const wrap=document.getElementById("gpSections"); if(!wrap) return; wrap.innerHTML="";
+  const subNums=[...GRADING].sort((a,b)=>a-b);
+  wrap.appendChild(gSection("✅ Submitted to PSA — at grading now","Already handed to your brother's submission; awaiting grades.",subNums,true));
+  BUCKETS.forEach(b=>{
+    const nums=Object.keys(gradePlan).filter(n=>gradePlan[n]===b.key).map(Number)
+      .sort((x,y)=>{ const rx=gOwnRaw(x)?0:1, ry=gOwnRaw(y)?0:1; return rx!==ry?rx-ry:x-y; });
+    wrap.appendChild(gSection(b.title,b.desc,nums,false));
+  });
+  const submitted=GRADING.size;
+  const vals=Object.values(gradePlan);
+  const allotted=vals.filter(v=>v==="allotted").length;
+  const toBuy=vals.filter(v=>v==="buy_high"||v==="buy_maybe").length;
+  setTxt("gpSlots",(submitted+allotted)+" / 16"); setTxt("gpSub",submitted); setTxt("gpAllot",allotted); setTxt("gpCons",toBuy);
+}
 document.querySelectorAll('.tabbtn').forEach(btn=>{ btn.addEventListener('click',()=>{
   document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
@@ -830,7 +949,9 @@ document.querySelectorAll('.tabbtn').forEach(btn=>{ btn.addEventListener('click'
   if(btn.dataset.pane==='paneYR'){ buildYear(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
   if(btn.dataset.pane==='paneSET'){ buildSet(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
   if(btn.dataset.pane==='paneGR'){ buildGrades(); setTimeout(()=>window.dispatchEvent(new Event('resize')),30); }
+  if(btn.dataset.pane==='paneGRADE'){ renderGrading(); }
 }); });
+renderGrading();
 </script>
 </body>
 </html>
